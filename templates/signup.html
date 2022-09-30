@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% set title = "Signup" %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-6">
+        <form action="{{ url('signup') }}" method="post" accept-charset="utf-8" enctype="application/x-www-form-urlencoded">
+            <div class="field">
+                <label class="label">First name</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" name="first_name" placeholder="First name" value="">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Last name</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" name="last_name" placeholder="Last name" value="">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Email</label>
+                <p class="control has-icons-left has-icons-right">
+                    <input class="input" name="email" type="email" placeholder="Email">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                </p>
+            </div>
+            <div class="field">
+                <label class="label">Password</label>
+                <p class="control has-icons-left">
+                    <input class="input" name="password" type="password" placeholder="Password">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control">
+                    <button class="button is-success">
+                        Signup
+                    </button>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

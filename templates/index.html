@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% set title = "Main page" %}
+
+{% block content %}
+<h3>{{ title }}</h3>
+
+{% if current_user %}
+    <p>Hi, {{ current_user.first_name }} {{ current_user.last_name }}!</p>
+    <br>
+    {% if current_user.avatar_url %}
+        <div>
+            <figure class="image is-128x128">
+                <img src="{{ url('static', filename=current_user.avatar_url) }}">
+            </figure>
+        </div>
+    {% endif %}
+    <br><br><br><br>
+
+    <form action="{{ url('save_avatar') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <label for="avatar">Avatar</label>
+        <input id="avatar" name="avatar" type="file" value=""/>
+        <input type="submit" value="submit"/>
+    </form>
+
+    <br>
+    <br>
+    <form action="{{ url('add_post') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <label for="message">Add New Post</label>
+        <input id="message" name="message" type="text" value=""/>
+        <input type="submit" value="Send"/>
+    </form>
+
+    <ul>
+    {% for post in posts %}
+        <li>{{ post.message }} | {{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+    {% endfor %}
+    </ul>
+    <br>
+    <br>
+    <p>My friends</p>
+    <ul>
+        {% for friend in friends %}
+            <li>{{ friend.first_name }} {{ friend.last_name }}</li>
+            <form action="{{ url('send_message') }}" method="post">
+                <label for="message_text">Send message</label>
+                <input id="message_text" name="message_text" type="text" value=""/>
+                <input type="hidden" name="to_user" value="{{ friend._id }}">
+                <button type="submit">Send...</button>
+            </form>
+            <br>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+
+{% endblock %}
