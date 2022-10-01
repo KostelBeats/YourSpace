@@ -18,10 +18,11 @@ class User:
     @staticmethod
     async def get_user_by_email(db: AsyncIOMotorDatabase, email: str):
         user = await db.users.find_one({'email': email})
-        print("get_user_by_email: ", user.keys())
+
         if user:
             user['_id'] = str(user['_id'])
             user['friends'] = [str(uid) for uid in user['friends']]
+            print("get_user_by_email: ", user.keys())
             return user
         else:
             return dict(error='User with email {} not found'.format(email))
