@@ -16,12 +16,11 @@ class Post:
     # Outputs: Post object
 
     @staticmethod
-    async def create_post(db: AsyncIOMotorDatabase, user_id: str, message: str, post_id: str):
+    async def create_post(db: AsyncIOMotorDatabase, user_id: str, message: str):
         data = {
             'user_id': ObjectId(user_id),
             'message': message,
             'date_created': datetime.utcnow(),
-            'post_id': ObjectId(post_id)
         }
         await db.posts.insert_one(data)
 
@@ -39,7 +38,7 @@ class Post:
     # Outputs: Edited post object
 
     @staticmethod
-    async def edit_post (db: AsyncIOMotorDatabase, user_id: str, post_id: str):
+    async def edit_post(db: AsyncIOMotorDatabase, user_id: str, date_time: str):
         pass
 
     # Delete post created by user
@@ -47,5 +46,5 @@ class Post:
     # Outputs: None. This method deletes post object from Database
 
     @staticmethod
-    async def delete_post (db: AsyncIOMotorDatabase, user_id: str, post_id: str):
-        pass
+    async def delete_post(db: AsyncIOMotorDatabase, user_id: str, post_id: str):
+        await db.posts.delete_one({'_id': ObjectId(post_id)})

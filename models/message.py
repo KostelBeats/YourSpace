@@ -16,13 +16,12 @@ class Message:
     # Outputs: None. This function sends message to Recipient
 
     @staticmethod
-    async def create_message(db: AsyncIOMotorDatabase, from_user: str, to_user: str, message: str, message_id: str):
+    async def create_message(db: AsyncIOMotorDatabase, from_user: str, to_user: str, message: str):
         data = {
             'from_user': ObjectId(from_user),
             'to_user': ObjectId(to_user),
             'message': message,
-            'date_created': datetime.utcnow(),
-            'message_id': ObjectId(message_id)
+            'date_created': datetime.utcnow()
         }
 
         await db.messages.insert_one(data)

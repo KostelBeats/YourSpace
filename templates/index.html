@@ -33,9 +33,14 @@
 
     <ul>
     {% for post in posts %}
-        <li>{{ post.message }} | {{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+        <li style="font-family: Jost,serif">{{ post.message }} | {{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+        <form action="{{ url('add_post') }}" method="post">
+                <input style="font-family: Jost,serif" type="hidden" name="user_id" value="{{ user._id }}">
+                <input style="font-family: Jost,serif" type="hidden" name="opr" value="{{ "d" }}">
+                <input style="font-family: Jost,serif"   name="message" type="hidden" value=""/>
+                <input style="font-family: Jost,serif" type="hidden" name="post_id" value="{{ post._id }}">
+                <button style="font-family: Jost,serif" type="submit">Delete post</button>
     {% endfor %}
-    </ul>
     <br>
     <br>
     <p>My friends</p>
@@ -55,3 +60,4 @@
 {% endif %}
 
 {% endblock %}
+

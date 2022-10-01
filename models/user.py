@@ -34,7 +34,7 @@ class User:
     @staticmethod
     async def get_user_by_id(db: AsyncIOMotorDatabase, user_id: str):
         user = await db.users.find_one({'_id': ObjectId(user_id)})
-        print("get_user_by_id: ", user.keys())
+        # print("get_user_by_id: ", user.keys())
         if user:
             user['_id'] = str(user['_id'])
             user['friends'] = [str(uid) for uid in user['friends']]
@@ -89,7 +89,8 @@ class User:
 
     @staticmethod
     async def add_friend(db: AsyncIOMotorDatabase, user_id: str, friend_id: str):
-        await db.users.update_one({'_id': ObjectId(user_id)}, {'$addToSet': {'friends_approval': ObjectId(friend_id)}})
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$addToSet': {'friends': ObjectId(friend_id)}})
+        # await db.users.update_one({'_id': ObjectId(user_id)}, {'$addToSet': {'friends_approval': ObjectId(friend_id)}})
 
     # Approve friend request
     # Inputs: Database, User ID, Target ID

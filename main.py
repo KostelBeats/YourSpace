@@ -6,6 +6,7 @@
 
 import base64
 import logging
+
 import aiohttp_jinja2
 import jinja2
 from aiohttp import web
@@ -44,6 +45,7 @@ def setup_middlewares(app):
 
 
 def main():
+
     app = web.Application(debug=True)
 
     secret_key = base64.urlsafe_b64decode(BaseConfig.secret_key)

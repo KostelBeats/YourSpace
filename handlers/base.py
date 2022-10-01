@@ -5,6 +5,9 @@
 # 2022, Alexey Shaforostov Ilya Fatkin, Denis Panchenko, Russian University of Transport, УИБ-212
 
 import hashlib
+import random
+import string
+
 import aiohttp_jinja2
 
 from aiohttp import web
@@ -20,7 +23,6 @@ class Index(web.View):
     async def get(self):
         conf = self.app['config']
         session = await get_session(self)
-        print(session.keys())
         user = {}
         posts = []
         friends = []
@@ -41,7 +43,6 @@ class Login(web.View):
         data = await self.post()
         email = data['email']
         password = data['password']
-        print(data.keys())
 
         user = await User.get_user_by_email(db=self.app['db'], email=email)
         if user.get('error'):
@@ -88,9 +89,16 @@ class PostView(web.View):
 
     async def post(self):
         data = await self.post()
+        print("Data keys: ", data.keys())
         session = await get_session(self)
+        print("Session keys: ", session.keys())
         if 'user' in session and data['message']:
             await Post.create_post(db=self.app['db'], user_id=session['user']['_id'], message=data['message'])
-            return web.HTTPFound(location=self.app.router['index'].url_for())
 
+            return web.HTTPFound(location=self.app.router['index'].url_for())
+        if 'user' in session and data['opr'] == 'd':
+            print("Post deletion in PostView")
+            print("Post Base Data: ", data['post_id'])
+            await Post.delete_post(db=self.app['db'],user_id=session['user']['_id'], post_id=data['post_id'])
         return web.HTTPForbidden()
+

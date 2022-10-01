@@ -8,6 +8,7 @@ from handlers.base import Index, Login, Signup, Logout, PostView
 from handlers.avatar import Avatar
 from handlers.friends import FriendsView
 from handlers.messages import MessageView
+from models.post import Post
 
 from config.common import BaseConfig
 
@@ -24,6 +25,8 @@ def setup_routes(app):
     app.router.add_post('/save_avatar', Avatar.post, name='save_avatar')
 
     app.router.add_post('/add_post', PostView.post, name='add_post')
+    # app.router.add_post('/delete_post', PostView.post_deletion, name='delete_post')
+    app.router.add_post('/edit_post', Post.edit_post, name='edit_post')
 
     app.router.add_get('/friends', FriendsView.get, name='friends')
     app.router.add_post('/add_friend', FriendsView.post, name='add_friend')
