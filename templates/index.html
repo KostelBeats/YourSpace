@@ -1,63 +1,167 @@
 {% extends "base.html" %}
-
 {% set title = "место для себя" %}
-
 {% block content %}
-
-
 {% if current_user %}
-    <p style="font-family: Jost,serif">привет, {{ current_user.first_name }} {{ current_user.last_name }}!</p>
-    <br>
-    {% if current_user.avatar_url %}
-        <div>
-            <figure class="image is-128x128">
-                <img src="{{ url('static', filename=current_user.avatar_url) }}">
-            </figure>
-        </div>
-    {% endif %}
-    <br><br><br><br>
-
-    <form action="{{ url('save_avatar') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-        <label style="font-family: Jost,serif" for="avatar">Avatar</label>
-        <input style="font-family: Jost,serif" id="avatar" name="avatar" type="file" value=""/>
-        <input style="font-family: Jost,serif" type="submit" value="submit"/>
-    </form>
-
-    <br>
-    <br>
-    <form action="{{ url('add_post') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-        <label style="font-family: Jost,serif" for="message">Add New Post</label>
-        <input style="font-family: Jost,serif"  id="message" name="message" type="text" value=""/>
-        <input style="font-family: Jost,serif" type="submit" value="Send"/>
-    </form>
-
-    <ul>
-    {% for post in posts %}
-        <li style="font-family: Jost,serif">{{ post.message }} | {{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
-        <form action="{{ url('add_post') }}" method="post">
-                <input style="font-family: Jost,serif" type="hidden" name="user_id" value="{{ user._id }}">
-                <input style="font-family: Jost,serif" type="hidden" name="opr" value="{{ "d" }}">
-                <input style="font-family: Jost,serif"   name="message" type="hidden" value=""/>
-                <input style="font-family: Jost,serif" type="hidden" name="post_id" value="{{ post._id }}">
-                <button style="font-family: Jost,serif" type="submit">Delete post</button>
-    {% endfor %}
-    <br>
-    <br>
-    <p>My friends</p>
-    <ul>
-        {% for friend in friends %}
-            <li>{{ friend.first_name }} {{ friend.last_name }}</li>
-            <form action="{{ url('send_message') }}" method="post">
-                <label style="font-family: Jost,serif" for="message_text">Send message</label>
-                <input style="font-family: Jost,serif" id="message_text" name="message_text" type="text" value=""/>
-                <input style="font-family: Jost,serif" type="hidden" name="to_user" value="{{ friend._id }}">
-                <button style="font-family: Jost,serif" type="submit">Send...</button>
-            </form>
-            <br>
-        {% endfor %}
-    </ul>
-
+<div class="text-box">
+   <style>
+      .btn:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+      .btn:active {
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      }
+      .btn-white {
+      background-color: #fff;
+      color: #777;
+      }
+      .btn::after {
+      -ms-transform: scale(0.5, 0.5); /* IE 9 */
+      -webkit-transform: scale(0.5, 0.5); /* Safari */
+      transform: scale(0.5, 0.5);
+      content: "";
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      border-radius: 100px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      transition: all 0.4s;
+      }
+      .btn-white::after {
+      background-color: #fff;
+      }
+      .btn:hover::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0;
+      }
+   </style>
+</div>
+<div class="input-box">
+   <style>
+      .form__input {
+      font-family: 'Jost', serif;
+      color: #ffffff;
+      font-size: 1.2rem;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      border-radius: 0.2rem;
+      background-color: rgba(69, 69, 69, 255);
+      border: none;
+      width: 90%;
+      display: block;
+      border-bottom: 0.3rem solid transparent;
+      transition: all 0.3s;
+      }
+   </style>
+</div>
+<div class="bg">
+   <style>
+      body {
+      background-color: #111111;
+      margin: 0;
+      overflow-x: hidden;
+      }
+      .bg {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      right: -50%;
+      bottom: -50%;
+      width: 200%;
+      height: 200vh;
+      background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+      background-repeat: repeat;
+      animation: bg-animation .2s infinite;
+      opacity: .9;
+      visibility: visible;
+      }
+      @keyframes bg-animation {
+      0% { transform: translate(0,0) }
+      10% { transform: translate(-5%,-5%) }
+      20% { transform: translate(-10%,5%) }
+      30% { transform: translate(5%,-10%) }
+      40% { transform: translate(-5%,15%) }
+      50% { transform: translate(-10%,5%) }
+      60% { transform: translate(15%,0) }
+      70% { transform: translate(0,10%) }
+      80% { transform: translate(-15%,0) }
+      90% { transform: translate(10%,5%) }
+      100% { transform: translate(5%,0) }
+      }
+   </style>
+</div>
+{% if current_user.avatar_url %}
+<div>
+   <figure class="image is-128x128">
+      <img src="{{ url('static', filename=current_user.avatar_url) }}" alt="avatar">
+   </figure>
+</div>
 {% endif %}
-
+<div class="fun-border">
+   <form action="{{ url('save_avatar') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+      <label style="font-family: Jost,serif; color:#ffffff" for="avatar">фото профиля   </label>
+      <input style="font-family: Jost,serif; color:#ffffff" id="avatar" name="avatar" type="file" value=""/>
+      <input style="font-family: Jost,serif" type="submit" value="submit"/>
+   </form>
+</div>
+<div class="fun-border">
+   <form action="{{ url('add_post') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+      <div>
+         <label style="font-family: Jost,serif; color:#ffffff" for="message">написать пост</label>
+         <input style="font-family: Jost,serif" type="hidden" name="opr" value="{{ "c" }}">
+      </div>
+      <br>
+      <div class="form__group">
+         <textarea name="message" cols="40" rows="5" style="font-family: Jost,serif" class="form__input" id="message"
+            placeholder="текст поста:" required=""></textarea>
+         <br>
+      </div>
+      <input style="font-family: Jost,serif" type="submit" class="btn btn-white" value="отправить"/>
+   </form>
+</div>
+<style contenteditable>
+   .fun-border {
+   margin-top: 25px;
+   margin-bottom: 25px;
+   padding: 25px;
+   background: rgba(72, 72, 72, 0.2);
+   border-radius: 16px;
+   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+   backdrop-filter: blur(5px);
+   -webkit-backdrop-filter: blur(5px);
+   border: 1px solid rgba(249, 247, 145, 0.3);
+   }
+</style>
+<ul>
+   {% for post in posts %}
+   <div class="fun-border">
+      <li style="font-family: Jost,serif; color:#ffffff"> {{ post.author_first }} {{ post.author_last }} {{ ":" }} <br> {{ post.message }} <br><br> {{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+      <form action="{{ url('add_post') }}" method="post">
+         <input style="font-family: Jost,serif" type="hidden" name="user_id" value="{{ user._id }}">
+         <input style="font-family: Jost,serif" type="hidden" name="opr" value="{{ "d" }}">
+         <input style="font-family: Jost,serif"   name="message" type="hidden" value=""/>
+         <input style="font-family: Jost,serif" type="hidden" name="post_id" value="{{ post._id }}">
+         <button style="font-family: Jost,serif" type="submit">Delete post</button>
+      </form>
+   </div>
+</ul>
+{% endfor %}
+<br>
+<br>
+<p style="font-family: Jost,serif">My friends</p>
+<ul>
+   {% for friend in friends %}
+   <li style="font-family: Jost,serif">{{ friend.first_name }} {{ friend.last_name }}</li>
+   <form action="{{ url('send_message') }}" method="post">
+      <label style="font-family: Jost,serif" for="message_text">Send message</label>
+      <input style="font-family: Jost,serif" id="message_text" name="message_text" type="text" value=""/>
+      <input style="font-family: Jost,serif" type="hidden" name="to_user" value="{{ friend._id }}">
+      <button style="font-family: Jost,serif" type="submit">Send...</button>
+   </form>
+   <br>
+   {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}
-

@@ -15,30 +15,27 @@
 
     <div class="navbar-brand">
         <a class="navbar-item" href="{{ url('index') }}">
-            <img style="height: 60px; width: 200px; max-height: 60px"
-                 src="{{ url('static', filename='python_logo.png') }}"
-                 alt="место для себя">
+            <p style="font-family: Jost,serif">место для себя</p>
         </a>
     </div>
 
     <div class="navbar-menu">
 
         <div class="navbar-start">
-            <a class="navbar-item" href="{{ url('index') }}">Home</a>
             {% if current_user %}
-                <a class="navbar-item" href="{{ url('friends') }}">Find friends</a>
-                <a class="navbar-item" href="{{ url('messages', type='inbox') }}">My messages</a>
+                <a style="font-family: Jost,serif" class="navbar-item" href="{{ url('friends') }}">поиск людей</a>
+                <a style="font-family: Jost,serif" class="navbar-item" href="{{ url('messages', type='inbox') }}">мои сообщения</a>
             {% endif %}
         </div>
 
         <div class="navbar-end">
             {% if is_anonymous %}
-                <a class="navbar-item" href="{{ url('login') }}">Login</a>
-                <a class="navbar-item" href="{{ url('signup') }}">Signup</a>
+                <a style="font-family: Jost,serif" class="navbar-item" href="{{ url('login') }}">войти</a>
+                <a style="font-family: Jost,serif" class="navbar-item" href="{{ url('signup') }}">зарегистрироваться</a>
             {% endif %}
 
             {% if current_user %}
-                <a class="navbar-item" href="{{ url('logout') }}">Logout</a>
+                <a class="navbar-item" href="{{ url('logout') }}">выйти</a>
             {% endif %}
         </div>
 

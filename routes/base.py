@@ -4,7 +4,7 @@
 # Made by 0xR from The 0x3L1tE
 # 2022, Alexey Shaforostov Ilya Fatkin, Denis Panchenko, Russian University of Transport, УИБ-212
 
-from handlers.base import Index, Login, Signup, Logout, PostView
+from handlers.base import Index, Login, Signup, Logout, PostView, Welcome
 from handlers.avatar import Avatar
 from handlers.friends import FriendsView
 from handlers.messages import MessageView
@@ -15,6 +15,7 @@ from config.common import BaseConfig
 
 def setup_routes(app):
     app.router.add_get('/', Index.get, name='index')
+    app.router.add_get('/welcome', Welcome.get, name='welcome')
 
     app.router.add_get('/login', Login.get, name='login')
     app.router.add_post('/login', Login.post)
@@ -25,7 +26,7 @@ def setup_routes(app):
     app.router.add_post('/save_avatar', Avatar.post, name='save_avatar')
 
     app.router.add_post('/add_post', PostView.post, name='add_post')
-    # app.router.add_post('/delete_post', PostView.post_deletion, name='delete_post')
+
     app.router.add_post('/edit_post', Post.edit_post, name='edit_post')
 
     app.router.add_get('/friends', FriendsView.get, name='friends')

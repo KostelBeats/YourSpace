@@ -85,6 +85,13 @@ class Logout(web.View):
         return web.HTTPFound(location=location)
 
 
+class Welcome(web.View):
+
+        @aiohttp_jinja2.template('welcome.html')
+        async def get(self):
+            pass
+
+
 class PostView(web.View):
 
     async def post(self):
@@ -92,13 +99,24 @@ class PostView(web.View):
         print("Data keys: ", data.keys())
         session = await get_session(self)
         print("Session keys: ", session.keys())
-        if 'user' in session and data['message']:
-            await Post.create_post(db=self.app['db'], user_id=session['user']['_id'], message=data['message'])
-
+        if 'user' in session and data['message'] and data['opr'] == 'c':
+            await Post.create_post(db=self.app['db'], user_id=session['user']['_id'],
+                                   message=data['message'], first_name=session['user']['first_name'],
+                                   last_name=session['user']['last_name'])
             return web.HTTPFound(location=self.app.router['index'].url_for())
+
         if 'user' in session and data['opr'] == 'd':
             print("Post deletion in PostView")
             print("Post Base Data: ", data['post_id'])
-            await Post.delete_post(db=self.app['db'],user_id=session['user']['_id'], post_id=data['post_id'])
-        return web.HTTPForbidden()
+            print("Reason: ", data['opr'])
+            await Post.delete_post(db=self.app['db'], post_id=data['post_id'])
+            return web.HTTPFound(location=self.app.router['index'].url_for())
 
+        if 'user' in session and data['opr'] == 'e':
+            print("Post editing in PostView")
+            print("Post Base Data: ", data['post_id'])
+            print("Reason: ", data['opr'])
+            await Post.edit_post(db=self.app['db'], post_id=data['post_id'], message=data['message'])
+            return web.HTTPFound(location=self.app.router['index'].url_for())
+
+        return web.HTTPForbidden()
