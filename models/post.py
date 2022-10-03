@@ -32,8 +32,21 @@ class Post:
 
     @staticmethod
     async def get_posts_by_user(db: AsyncIOMotorDatabase, user_id: str, limit=20):
+        user = await db.users.find_one({'_id': ObjectId(user_id)})
+        print(type(user))
+
         posts = await db.posts.find({'user_id': ObjectId(user_id)}).to_list(limit)
+        print("Friends List: ", user['friends'])
+        for friend in user['friends']:
+            posts.append(await db.posts.find({'user_id': ObjectId(friend)}).to_list(limit))
+        print(posts[0]['date_created'])
+        print(type(posts[0]))
         return posts
+
+    @staticmethod
+    async def get_friends_posts(db: AsyncIOMotorDatabase, user_id: str, limit=20):
+        friends = await db.users.find('friends').to_list(limit)
+        print(friends)
 
     # Edit post created by user
     # Inputs: Database, Post ID

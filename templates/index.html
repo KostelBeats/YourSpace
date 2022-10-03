@@ -260,7 +260,7 @@
 <ul>
    {% for post in posts %}
    <div class="fun-border">
-      <li style="font-family: Jost,serif; color:#ffffff"> {{ post.author_first }} {{ post.author_last }} {{ ":" }} <br> {{ post.message }} <br><br> {{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+      <li style="font-family: Jost,serif; color:#ffffff"> {{ post.author_first }} {{ post.author_last }} {{ ":" }} <br> {{ post.message }} <br><br> {{ post }}</li>
       <form action="{{ url('add_post') }}" method="post">
          <input style="font-family: Jost,serif" type="hidden" name="user_id" value="{{ user._id }}">
          <input style="font-family: Jost,serif" type="hidden" name="opr" value="{{ "d" }}">
