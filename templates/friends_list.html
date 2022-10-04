@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
-{% set title = "Messages" %}
+{% set title = "мои друзья" %}
 
 {% block content %}
-
 <div class="bg">
    <style>
       body {
@@ -129,7 +128,7 @@
 
 
     </style>
-<style contenteditable>
+        <style contenteditable>
 
     p.reg_label{
 
@@ -149,25 +148,35 @@
 
     </style>
 
-    {% for message in messages %}
+<p class="big_label">мои друзья</p>
+<br>
 
-        {% if message.str_from_user == current_user._id or message.str_to_user == current_user._id%}
+<ul>
+   {% for friend in friends %}
+       <div class="fun-border">
+   <li class="big_label"> {{ friend.first_name }} {{ friend.last_name }}</li>
+   <form action="{{ url('messages') }}" method="get">
+      <label class="reg_label" for="message_text">открыть чат</label>
+      <input style="font-family: Jost,serif" type="hidden" name="to_user" value="{{ friend._id }}">
+      <button class="btn-white" type="submit">отправить</button>
+   </form>
 
-                <ul>
-
-                    <div class="fun-border">
-
-                        <li class="big_label"> {{ message.from_user }} -> {{ message.to_user }}</li>
-
-
-                    </div>
-
-
-                </ul>
-
-            {% endif %}
-
-    {% endfor %}
-
+           <form action="{{ url('send_message') }}" method="post">
+               <label class="reg_label" for="message_text">сообщение</label>
+               <input style="font-family: Jost,serif" type="hidden" name="to_user" value="{{ friend._id }}">
+               <input type="text" name="message_text" value="">
+               <button class="btn-white" type="submit">отправить</button>
+           </form>
+           <br>
+       <form action="={{ 'remove_friend' }}" method="post">
+           <button class="btn-white" type="button">убрать из друзей</button>
+       </form>
+              <form action="={{ 'block_friend' }}" method="post">
+           <button class="btn-white" type="button">заблокировать</button>
+       </form>
+       </div>
+   <br>
+   {% endfor %}
+</ul>
 
 {% endblock %}

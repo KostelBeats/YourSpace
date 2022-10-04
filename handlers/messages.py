@@ -17,12 +17,8 @@ class MessageView(web.View):
         if 'user' not in self.session:
             return web.HTTPForbidden()
 
-        if self.match_info['type'] == 'inbox':
-            messages = await Message.get_inbox_messages_by_user(db=self.app['db'], user_id=self.session['user']['_id'])
-        elif self.match_info['type'] == 'outbox':
-            messages = await Message.get_send_messages_by_user(db=self.app['db'], user_id=self.session['user']['_id'])
-        else:
-            messages = []
+        messages = await Message.get_inbox_messages_by_user(db=self.app['db'], user_id=self.session['user']['_id'])
+
         return dict(messages=messages)
 
     async def post(self):
@@ -30,6 +26,7 @@ class MessageView(web.View):
             return web.HTTPForbidden()
 
         data = await self.post()
+        print(data)
         await Message.create_message(db=self.app['db'], from_user=self.session['user']['_id'],
                                      to_user=data['to_user'], message=data['message_text'])
 

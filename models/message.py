@@ -19,6 +19,8 @@ class Message:
     async def create_message(db: AsyncIOMotorDatabase, from_user: str, to_user: str, message: str):
         data = {
             'from_user': ObjectId(from_user),
+            'str_from_user': from_user,
+            'str_to_user': to_user,
             'to_user': ObjectId(to_user),
             'message': message,
             'date_created': datetime.utcnow()
@@ -32,7 +34,10 @@ class Message:
 
     @staticmethod
     async def get_inbox_messages_by_user(db: AsyncIOMotorDatabase, user_id: str, limit=20):
-        messages = await db.messages.find({'to_user': ObjectId(user_id)}).to_list(limit)
+        messages = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
+        # messages = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
+
+        print(messages)
         return messages
 
     # Get list of sent messages

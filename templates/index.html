@@ -117,7 +117,7 @@
     </style>
     <div class="parent">
     <div class="block">
-        <a class ="block">место для себя. в любое время.</a>
+        <a style="font-family: Jost,serif; color:#ffffff" class ="block">место для себя. в любое время.</a>
     </div>
 </div>
 
@@ -215,7 +215,7 @@
       }
    </style>
 </div>
-                <a>current_user.user_id</a>
+
 {% if current_user.avatar_url %}
 <div>
    <figure class="image is-128x128">
@@ -270,7 +270,6 @@
           {% if current_user._id == post.str_user_id %}
             <button style="font-family: Jost,serif" type="submit">Delete post</button>
           {% endif %}
-            <a>not your post</a>
 
       </form>
    </div>
@@ -278,18 +277,6 @@
 {% endfor %}
 <br>
 <br>
-<p style="font-family: Jost,serif">My friends</p>
-<ul>
-   {% for friend in friends %}
-   <li style="font-family: Jost,serif">{{ friend.first_name }} {{ friend.last_name }}</li>
-   <form action="{{ url('send_message') }}" method="post">
-      <label style="font-family: Jost,serif" for="message_text">Send message</label>
-      <input style="font-family: Jost,serif" id="message_text" name="message_text" type="text" value=""/>
-      <input style="font-family: Jost,serif" type="hidden" name="to_user" value="{{ friend._id }}">
-      <button style="font-family: Jost,serif" type="submit">Send...</button>
-   </form>
-   <br>
-   {% endfor %}
-</ul>
+
 {% endif %}
 {% endblock %}

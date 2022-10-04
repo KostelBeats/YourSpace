@@ -10,6 +10,13 @@
 </head>
 <body>
 
+  <style type="labels">
+   H1 {
+    font-family: Jost, sans-serif; /* Гарнитура шрифта */
+    font-size: 100%; /* Размер текста */
+   }
+    </style>
+
 {% block nav %}
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
 
@@ -24,7 +31,8 @@
         <div class="navbar-start">
             {% if current_user %}
                 <a style="font-family: Jost,serif" class="navbar-item" href="{{ url('friends') }}">поиск людей</a>
-                <a style="font-family: Jost,serif" class="navbar-item" href="{{ url('messages', type='inbox') }}">мои сообщения</a>
+                <a style="font-family: Jost,serif" class="navbar-item" href="{{ url('messages') }}">мои сообщения</a>
+                <a style="font-family: Jost,serif" class="navbar-item" href="{{ url('my_friends') }}">мои друзья</a>
             {% endif %}
         </div>
 

@@ -6,7 +6,7 @@
 
 from handlers.base import Index, Login, Signup, Logout, PostView, Welcome
 from handlers.avatar import Avatar
-from handlers.friends import FriendsView
+from handlers.friends import FriendsView, UserFriends
 from handlers.messages import MessageView
 from models.post import Post
 
@@ -31,9 +31,14 @@ def setup_routes(app):
 
     app.router.add_get('/friends', FriendsView.get, name='friends')
     app.router.add_post('/add_friend', FriendsView.post, name='add_friend')
+    app.router.add_post('/delete_friend', FriendsView.post, name='remove_friend')
 
-    app.router.add_get('/messages/{type}', MessageView.get, name='messages')
+    app.router.add_get('/my_friends', UserFriends.get, name='my_friends')
+    app.router.add_post('/my_friends', UserFriends.post, name='my_friend')
+
+    app.router.add_get('/messages', MessageView.get, name='messages')
     app.router.add_post('/send_message', MessageView.post, name='send_message')
+
 
 
 def setup_static_routes(app):
