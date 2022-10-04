@@ -112,6 +112,7 @@
 </style>
 <style contenteditable>
 
+
     p.big_label{
 
         color: white;
@@ -128,9 +129,6 @@
     }
 
 
-    </style>
-<style contenteditable>
-
     p.reg_label{
 
         color: white;
@@ -145,21 +143,49 @@
         font-size: 16px;
 
     }
+        li.reg_label{
+
+        color: white;
+        font-family: 'Jost', serif;
+        font-size: 16px;
+
+    }
+        li.small_label{
+
+            color: lightslategrey;
+            font-family: 'Jost', serif;
+            font-size: 10px;
+        }
 
 
     </style>
 
-    {% for message in messages %}
+    {% for item in messages %}
 
-        {% if message.str_from_user == current_user._id or message.str_to_user == current_user._id%}
+        {% if item.str_from_user == current_user._id or item.str_to_user == current_user._id%}
 
                 <ul>
 
                     <div class="fun-border">
 
-                        <li class="big_label"> {{ message.from_user }} -> {{ message.to_user }}</li>
+                        <li class="big_label"> {{ item.author_first }} {{ item.author_last }} ->
+                            {{ item.recipient_first }} {{ item.recipient_last }}</li>
 
+                        <br>
 
+                        <li class="reg_label">{{ item.message }}</li>
+
+                        <br>
+
+                        <li class="small_label">{{ item.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+
+                        {% if item.str_from_user == current_user._id%}
+                            <form action="{{ url('send_message') }}" method="post">
+                            <input type="hidden" name="reason" value="d">
+                            <input type="hidden" name="message_id" value="{{ item._id }}">
+                                <button class="btn-white" type="submit">удалить</button>
+                            </form>
+                            {% endif %}
                     </div>
 
 

@@ -26,7 +26,6 @@ def setup_routes(app):
     app.router.add_post('/save_avatar', Avatar.post, name='save_avatar')
 
     app.router.add_post('/add_post', PostView.post, name='add_post')
-
     app.router.add_post('/edit_post', Post.edit_post, name='edit_post')
 
     app.router.add_get('/friends', FriendsView.get, name='friends')
@@ -38,6 +37,7 @@ def setup_routes(app):
 
     app.router.add_get('/messages', MessageView.get, name='messages')
     app.router.add_post('/send_message', MessageView.post, name='send_message')
+
 
 
 

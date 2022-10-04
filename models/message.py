@@ -17,12 +17,18 @@ class Message:
 
     @staticmethod
     async def create_message(db: AsyncIOMotorDatabase, from_user: str, to_user: str, message: str):
+        author = await db.users.find_one({'_id': ObjectId(from_user)})
+        recipient = await db.users.find_one({'_id': ObjectId(to_user)})
         data = {
             'from_user': ObjectId(from_user),
             'str_from_user': from_user,
             'str_to_user': to_user,
             'to_user': ObjectId(to_user),
             'message': message,
+            'author_first' : author['first_name'],
+            'author_last' : author['last_name'],
+            'recipient_first' : recipient['first_name'],
+            'recipient_last' : recipient['last_name'],
             'date_created': datetime.utcnow()
         }
 
@@ -62,5 +68,5 @@ class Message:
     # Outputs: None. This function deletes message in Database
 
     @staticmethod
-    async def delete_message(db: AsyncIOMotorDatabase, user_id: str, message_id: str):
-        pass
+    async def delete_message(db: AsyncIOMotorDatabase, message_id: str):
+        await db.messages.delete_one({'_id': ObjectId(message_id)})

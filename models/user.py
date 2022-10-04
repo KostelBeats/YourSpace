@@ -49,6 +49,7 @@ class User:
     @staticmethod
     async def create_new_user(db: AsyncIOMotorDatabase, data):
         email = data['email']
+        nickname = data['nickname']
         user = await db.users.find_one({'email': email})
         if user:
             return dict(error='user with email {} exist'.format(email))

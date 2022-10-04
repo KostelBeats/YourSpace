@@ -163,7 +163,8 @@
 
            <form action="{{ url('send_message') }}" method="post">
                <label class="reg_label" for="message_text">сообщение</label>
-               <input style="font-family: Jost,serif" type="hidden" name="to_user" value="{{ friend._id }}">
+               <input type="hidden" name="to_user" value="{{ friend._id }}">
+               <input type="hidden" name="reason" value="s">
                <input type="text" name="message_text" value="">
                <button class="btn-white" type="submit">отправить</button>
            </form>

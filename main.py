@@ -30,8 +30,6 @@ async def current_user_ctx_processor(request):
         if user:
             is_anonymous = not bool(user)
 
-    print(type(user['_id']))
-
     return dict(current_user=user, is_anonymous=is_anonymous)
 
 

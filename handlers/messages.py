@@ -25,10 +25,17 @@ class MessageView(web.View):
         if 'user' not in self.session:
             return web.HTTPForbidden()
 
+        location = self.app.router['messages'].url_for()
         data = await self.post()
-        print(data)
-        await Message.create_message(db=self.app['db'], from_user=self.session['user']['_id'],
-                                     to_user=data['to_user'], message=data['message_text'])
 
-        location = self.app.router['index'].url_for()
+        if data['reason'] == 'd':
+            print("Message deletion handler entry point.")
+            await Message.delete_message(db=self.app['db'], message_id=data['message_id'])
+            return web.HTTPFound(location=location)
+        elif data['reason'] == 's':
+            await Message.create_message(db=self.app['db'], from_user=self.session['user']['_id'],
+                                         to_user=data['to_user'], message=data['message_text'])
+        elif data['reason'] == 'e':
+            pass
+
         return web.HTTPFound(location=location)
