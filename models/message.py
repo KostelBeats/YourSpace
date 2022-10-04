@@ -40,11 +40,11 @@ class Message:
 
     @staticmethod
     async def get_inbox_messages_by_user(db: AsyncIOMotorDatabase, user_id: str, limit=20):
-        messages = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
-        # messages = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
 
-        print(messages)
-        return messages
+        messages_from = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
+        messages_to = await db.messages.find({'to_user': ObjectId(user_id)}).to_list(limit)
+
+        return messages_to + messages_from
 
     # Get list of sent messages
     # Inputs: Database, User ID, List size
