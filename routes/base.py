@@ -38,8 +38,5 @@ def setup_routes(app):
     app.router.add_get('/messages', MessageView.get, name='messages')
     app.router.add_post('/send_message', MessageView.post, name='send_message')
 
-
-
-
 def setup_static_routes(app):
     app.router.add_static('/static/', path=BaseConfig.STATIC_DIR, name='static')
