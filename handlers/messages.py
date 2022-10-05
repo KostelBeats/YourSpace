@@ -29,7 +29,6 @@ class MessageView(web.View):
         data = await self.post()
 
         if data['reason'] == 'd':
-            print("Message deletion handler entry point.")
             await Message.delete_message(db=self.app['db'], message_id=data['message_id'])
             return web.HTTPFound(location=location)
         elif data['reason'] == 's':

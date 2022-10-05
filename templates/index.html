@@ -3,6 +3,7 @@
 {% block content %}
 {% if not(current_user) %}
 
+    <div>
 <div class="text-box">
    <style>
       .btn:hover {
@@ -62,7 +63,12 @@
       body {
       background-color: #111111;
       margin: 0;
-      overflow-x: hidden;
+      overflow-x: hidden;-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+          width: 100vw;
+          height: 100vh;
       }
       .bg {
       position: fixed;
@@ -70,7 +76,7 @@
       left: -50%;
       right: -50%;
       bottom: -50%;
-      width: 200%;
+      width: 200vw;
       height: 200vh;
       background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
       animation: bg-animation .2s infinite;
@@ -131,16 +137,15 @@
   display: flex;
 }
 
-.wrap span {
+.wrap a {
   align-self: flex-end;
 }
 
 
 </style>
-    <div class="wrap">
-  <span>Align me to the bottom</span>
-</div>
 
+
+    </div>
 {% endif %}
 
 {% if current_user %}
@@ -204,6 +209,8 @@
       background-color: #111111;
       margin: 0;
       overflow-x: hidden;
+           width: 100vw;
+          height: 100vh;
       }
       .bg {
       position: fixed;
@@ -211,8 +218,8 @@
       left: -50%;
       right: -50%;
       bottom: -50%;
-      width: 200%;
-      height: 200vh;
+        width: 200vw;
+          height: 200vh;
       background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
       background-repeat: repeat;
       animation: bg-animation .2s infinite;
