@@ -80,7 +80,11 @@ class Logout(web.View):
 
     async def get(self):
         session = await get_session(self)
-        del session['user']
+        if 'user' in session:
+            del session['user']
+
+        else:
+            return web.HTTPForbidden()
 
         location = self.app.router['login'].url_for()
         return web.HTTPFound(location=location)
@@ -97,9 +101,7 @@ class PostView(web.View):
 
     async def post(self):
         data = await self.post()
-        print("Data keys: ", data.keys())
         session = await get_session(self)
-        print("Session keys: ", session.keys())
         if 'user' in session and data['message'] and data['opr'] == 'c':
             await Post.create_post(db=self.app['db'], user_id=session['user']['_id'],
                                    message=data['message'], first_name=session['user']['first_name'],
@@ -107,16 +109,10 @@ class PostView(web.View):
             return web.HTTPFound(location=self.app.router['index'].url_for())
 
         if 'user' in session and data['opr'] == 'd':
-            print("Post deletion in PostView")
-            print("Post Base Data: ", data['post_id'])
-            print("Reason: ", data['opr'])
             await Post.delete_post(db=self.app['db'], post_id=data['post_id'])
             return web.HTTPFound(location=self.app.router['index'].url_for())
 
         if 'user' in session and data['opr'] == 'e':
-            print("Post editing in PostView")
-            print("Post Base Data: ", data['post_id'])
-            print("Reason: ", data['opr'])
             await Post.edit_post(db=self.app['db'], post_id=data['post_id'], message=data['message'])
             return web.HTTPFound(location=self.app.router['index'].url_for())
 

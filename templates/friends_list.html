@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
-{% set title = "Messages" %}
+{% set title = "мои друзья" %}
 
 {% block content %}
-
 <div class="bg">
    <style>
       body {
@@ -112,7 +111,6 @@
 </style>
 <style contenteditable>
 
-
     p.big_label{
 
         color: white;
@@ -129,6 +127,9 @@
     }
 
 
+    </style>
+        <style contenteditable>
+
     p.reg_label{
 
         color: white;
@@ -143,57 +144,37 @@
         font-size: 16px;
 
     }
-        li.reg_label{
-
-        color: white;
-        font-family: 'Jost', serif;
-        font-size: 16px;
-
-    }
-        li.small_label{
-
-            color: lightslategrey;
-            font-family: 'Jost', serif;
-            font-size: 10px;
-        }
 
 
     </style>
 
-    {% for item in messages %}
+<p class="big_label">мои друзья</p>
+<br>
 
-        {% if item.str_from_user == current_user._id or item.str_to_user == current_user._id%}
+<ul>
+   {% for friend in friends %}
+       <div class="fun-border">
+   <li class="big_label"> {{ friend.first_name }} {{ friend.last_name }}</li>
+   <form action="{{ url('messages') }}" method="get">
+      <label class="reg_label" for="message_text">открыть чат</label>
+      <input style="font-family: Jost,serif" type="hidden" name="to_user" value="{{ friend._id }}">
+      <button class="btn-white" type="submit">отправить</button>
+   </form>
 
-                <ul>
-
-                    <div class="fun-border">
-
-                        <li class="big_label"> {{ item.author_first }} {{ item.author_last }} ->
-                            {{ item.recipient_first }} {{ item.recipient_last }}</li>
-
-                        <br>
-
-                        <li class="reg_label">{{ item.message }}</li>
-
-                        <br>
-
-                        <li class="small_label">{{ item.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</li>
-
-                        {% if item.str_from_user == current_user._id%}
-                            <form action="{{ url('send_message') }}" method="post">
-                            <input type="hidden" name="reason" value="d">
-                            <input type="hidden" name="message_id" value="{{ item._id }}">
-                                <button class="btn-white" type="submit">удалить</button>
-                            </form>
-                            {% endif %}
-                    </div>
-
-
-                </ul>
-
-            {% endif %}
-
-    {% endfor %}
-
+           <form action="{{ url('send_message') }}" method="post">
+               <label class="reg_label" for="message_text">сообщение</label>
+               <input type="hidden" name="to_user" value="{{ friend._id }}">
+               <input type="hidden" name="reason" value="s">
+               <input type="text" name="message_text" value="">
+               <button class="btn-white" type="submit">отправить</button>
+           </form>
+           <br>
+       <form action="={{ 'remove_friend' }}" method="post">
+           <button class="btn-white" type="button">убрать из друзей</button>
+       </form>
+       </div>
+   <br>
+   {% endfor %}
+</ul>
 
 {% endblock %}

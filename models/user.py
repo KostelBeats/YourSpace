@@ -22,7 +22,6 @@ class User:
         if user:
             user['_id'] = str(user['_id'])
             user['friends'] = [str(uid) for uid in user['friends']]
-            print("get_user_by_email: ", user.keys())
             return user
         else:
             return dict(error='User with email {} not found'.format(email))
@@ -49,13 +48,13 @@ class User:
     @staticmethod
     async def create_new_user(db: AsyncIOMotorDatabase, data):
         email = data['email']
+        nickname = data['nickname']
         user = await db.users.find_one({'email': email})
         if user:
             return dict(error='user with email {} exist'.format(email))
 
         if data['first_name'] and data['last_name'] and data['password']:
             data = dict(data)
-            print("create_new_user: ", data.keys())
             data['password'] = hashlib.sha256(data['password'].encode('utf8')).hexdigest()
             data['friends'] = []
             data['friends_approval'] = []

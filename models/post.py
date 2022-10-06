@@ -19,6 +19,7 @@ class Post:
     async def create_post(db: AsyncIOMotorDatabase, user_id: str, message: str, first_name: str, last_name: str):
         data = {
             'user_id': ObjectId(user_id),
+            'str_user_id': user_id,
             'message': message,
             'date_created': datetime.utcnow(),
             'author_first': first_name,
@@ -47,7 +48,6 @@ class Post:
         for friend in user['friends']:
             temp = await db.posts.find({'user_id': ObjectId(friend)}).to_list(limit)
             for post in temp:
-                post['str_user_id'] = str(post['user_id'])
                 posts.append(post)
 
         return posts

@@ -26,7 +26,6 @@ async def current_user_ctx_processor(request):
     is_anonymous = True
     if 'user' in session:
         user_id = session['user']['_id']
-        print(type(user_id))
         user = await User.get_user_by_id(db=request.app['db'], user_id=user_id)
         if user:
             is_anonymous = not bool(user)
