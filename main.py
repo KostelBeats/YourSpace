@@ -28,6 +28,7 @@ async def current_user_ctx_processor(request):
         user_id = session['user']['_id']
         user = await User.get_user_by_id(db=request.app['db'], user_id=user_id)
         if user:
+            user['online'] = True
             is_anonymous = not bool(user)
 
     return dict(current_user=user, is_anonymous=is_anonymous)

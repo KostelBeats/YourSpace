@@ -3,6 +3,7 @@
 {% block content %}
 {% if not(current_user) %}
 
+    <meta http-equiv="refresh" content="0; url={{ url('welcome') }}" />
     <div>
 <div class="text-box">
    <style>
@@ -242,14 +243,14 @@
    </style>
 </div>
 
+
+<div class="fun-border">
 {% if current_user.avatar_url %}
-<div>
+
    <figure class="image is-128x128">
       <img src="{{ url('static', filename=current_user.avatar_url) }}" alt="avatar">
    </figure>
-</div>
-{% endif %}
-<div class="fun-border">
+    {% endif %}
    <form action="{{ url('save_avatar') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
       <label style="font-family: Jost,serif; color:#ffffff" for="avatar">фото профиля   </label>
       <input style="font-family: Jost,serif; color:#ffffff" id="avatar" name="avatar" type="file" value=""/>
@@ -271,7 +272,8 @@
       <input style="font-family: Jost,serif" type="submit" class="btn btn-white" value="отправить"/>
    </form>
 </div>
-<style contenteditable>
+
+        <style contenteditable>
    .fun-border {
    margin-top: 25px;
    margin-bottom: 25px;
@@ -283,7 +285,8 @@
    -webkit-backdrop-filter: blur(5px);
    border: 1px solid rgba(249, 247, 145, 0.3);
    }
-</style>
+
+    </style>
 <ul>
    {% for post in posts %}
    <div class="fun-border">
