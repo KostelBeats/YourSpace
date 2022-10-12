@@ -15,7 +15,7 @@ from aiohttp_session import setup, get_session, session_middleware
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from routes.base import setup_routes
+from routes.base import setup_routes, setup_static_routes
 from config.common import BaseConfig
 from models.user import User
 
@@ -58,13 +58,14 @@ def main():
         context_processors=[current_user_ctx_processor])
 
     setup_routes(app)
+    setup_static_routes(app)
     setup_middlewares(app)
 
     app['config'] = BaseConfig
     app['db'] = getattr(AsyncIOMotorClient(), BaseConfig.database_name)
 
     logging.basicConfig(level=logging.DEBUG)
-    web.run_app(app)
+    web.run_app(app, port=80)
 
 
 if __name__ == '__main__':

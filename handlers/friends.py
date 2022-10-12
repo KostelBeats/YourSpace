@@ -16,14 +16,14 @@ class FriendsView(web.View):
     @aiohttp_jinja2.template('friends.html')
     async def get(self):
         if 'user' not in self.session:
-            return web.HTTPForbidden()
+            return web.HTTPFound(location=self.app.router['error_403'].url_for())
 
         users = await User.get_user_friends_suggestions(db=self.app['db'], user_id=self.session['user']['_id'])
         return dict(users=users)
 
     async def post(self):
         if 'user' not in self.session:
-            return web.HTTPForbidden()
+            return web.HTTPFound(location=self.app.router['error_403'].url_for())
 
         data = await self.post()
         await User.add_friend(db=self.app['db'], user_id=self.session['user']['_id'], friend_id=data['uid'])
@@ -36,11 +36,11 @@ class UserFriends(web.View):
     @aiohttp_jinja2.template('friends_list.html')
     async def get(self):
         if 'user' not in self.session:
-            return web.HTTPForbidden()
+            return web.HTTPFound(location=self.app.router['error_403'].url_for())
 
         users = await User.get_user_friends(db=self.app['db'], user_id=self.session['user']['_id'])
         return dict(friends=users)
 
     async def post(self):
         if 'user' not in self.session:
-            return web.HTTPForbidden()
+            return web.HTTPFound(location=self.app.router['error_403'].url_for())

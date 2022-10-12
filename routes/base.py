@@ -4,7 +4,7 @@
 # Made by 0xR from The 0x3L1tE
 # 2022, Alexey Shaforostov Ilya Fatkin, Denis Panchenko, Russian University of Transport, УИБ-212
 
-from handlers.base import Index, Login, Signup, Logout, PostView, Welcome
+from handlers.base import Index, Login, Signup, Logout, PostView, Welcome, Error404, Error403, Error500
 from handlers.avatar import Avatar
 from handlers.friends import FriendsView, UserFriends
 from handlers.messages import MessageView
@@ -14,7 +14,8 @@ from config.common import BaseConfig
 
 
 def setup_routes(app):
-    app.router.add_get('/', Index.get, name='index')
+    print('setting up routes...')
+    app.router.add_get('/main', Index.get, name='index')
 
     app.router.add_get('/login', Login.get, name='login')
     app.router.add_post('/login', Login.post)
@@ -39,6 +40,14 @@ def setup_routes(app):
 
     app.router.add_get('/welcome', Welcome.get, name='welcome')
 
+    app.router.add_get('/error_404', Error404.get, name='error_404')
+    app.router.add_get('/error_403', Error403.get, name='error_403')
+    app.router.add_get('/error_500', Error500.get, name='error_500')
+
+    print('done')
+
 
 def setup_static_routes(app):
+    print('setting up static routes...')
     app.router.add_static('/static/', path=BaseConfig.STATIC_DIR, name='static')
+    print('done.')

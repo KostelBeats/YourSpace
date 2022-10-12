@@ -5,8 +5,6 @@
 # 2022, Alexey Shaforostov Ilya Fatkin, Denis Panchenko, Russian University of Transport, УИБ-212
 
 import hashlib
-import random
-import string
 
 import aiohttp_jinja2
 
@@ -19,7 +17,7 @@ from models.post import Post
 
 class Index(web.View):
 
-    @aiohttp_jinja2.template('index.html')
+    @aiohttp_jinja2.template('main.html')
     async def get(self):
         conf = self.app['config']
         session = await get_session(self)
@@ -28,7 +26,6 @@ class Index(web.View):
         friends = []
         if 'user' in session:
             posts = await Post.get_posts_by_user(db=self.app['db'], user_id=session['user']['_id'])
-
             friends = await User.get_user_friends(db=self.app['db'], user_id=session['user']['_id'])
 
         return dict(conf=conf, user=user, posts=posts, friends=friends)
@@ -47,7 +44,7 @@ class Login(web.View):
 
         user = await User.get_user_by_email(db=self.app['db'], email=email)
         if user.get('error'):
-            return web.HTTPNotFound()
+            return web.HTTPFound(location=self.app.router['error_404'].url_for())
 
         if user['password'] == hashlib.sha256(password.encode('utf8')).hexdigest():
             session = await get_session(self)
@@ -55,7 +52,7 @@ class Login(web.View):
             location = self.app.router['index'].url_for()
             return web.HTTPFound(location=location)
 
-        return web.HTTPNotFound()
+        return web.HTTPFound(location=self.app.router['error_404'].url_for())
 
 
 class Signup(web.View):
@@ -97,6 +94,27 @@ class Welcome(web.View):
             pass
 
 
+class Error404(web.View):
+
+    @aiohttp_jinja2.template('error_404.html')
+    async def get(self):
+        pass
+
+
+class Error403(web.View):
+
+    @aiohttp_jinja2.template('error_403.html')
+    async def get(self):
+        pass
+
+
+class Error500(web.View):
+
+    @aiohttp_jinja2.template('error_500.html')
+    async def get(self):
+        pass
+
+
 class PostView(web.View):
 
     async def post(self):
@@ -116,4 +134,4 @@ class PostView(web.View):
             await Post.edit_post(db=self.app['db'], post_id=data['post_id'], message=data['message'])
             return web.HTTPFound(location=self.app.router['index'].url_for())
 
-        return web.HTTPForbidden()
+        return web.HTTPFound(location=self.app.router['error_403'].url_for())

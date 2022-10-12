@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <title>main</title>
+    <link rel="stylesheet" href="/static/CSS/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/static/CSS/main.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/nicepage.js" defer=""></script>
+    
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jost:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": ""
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="main">
+    <meta property="og:type" content="website">
+  </head>
+{% if current_user %}
+  <body class="u-body u-image u-xl-mode" data-lang="en" style="background-position: 50% 50%; background-image: url(/static/CSS/images/vhs_back.gif);"><header class="skrollable u-clearfix u-header u-parallax u-valign-middle u-white u-header" id="sec-27e0"><nav class="u-align-left u-menu u-menu-one-level u-offcanvas u-offcanvas-shift u-menu-1" data-responsive-from="MD" data-position="mainmenu">
+        <div class="menu-collapse u-custom-font" style="font-size: 1rem; letter-spacing: 0px; font-family: Jost;">
+          <a class="u-button-style u-custom-border u-custom-border-color u-custom-borders u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+            <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+            <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+          </a>
+        </div>
+        <div class="u-custom-menu u-nav-container">
+          <ul class="u-custom-font u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="index" style="padding: 10px;">место для себя</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="myfriends" style="padding: 10px;">мои друзья</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="mymessages" style="padding: 10px;">мои сообщения</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="findpeople" style="padding: 10px;">поиск людей</a>
+</li></ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+          <div class="u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav u-white u-sidenav-1" data-offcanvas-width="250">
+            <div class="u-inner-container-layout u-sidenav-overflow">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-custom-font u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="index">место для себя</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="myfriends">мои друзья</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="mymessages">мои сообщения</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="findpeople">поиск людей</a>
+</li></ul>
+            </div>
+          </div>
+          <div class="u-black u-menu-overlay u-opacity u-opacity-40"></div>
+        </div>
+      </nav></header>
+    <section class="skrollable u-clearfix u-image u-parallax u-section-1" id="sec-f5f7" data-image-width="360" data-image-height="500">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="glass_border u-align-left u-border-3 u-border-grey-40 u-container-style u-expanded-width u-group u-group-1">
+          <div class="u-container-layout u-container-layout-1">
+            <img class="u-image u-image-round u-preserve-proportions u-radius-27 u-image-1" src="{{ url('static', filename=current_user.avatar_url) }}" alt="" data-image-width="4320" data-image-height="4320">
+            <h1 class="u-custom-font u-text u-text-body-alt-color u-text-1">{{ current_user.first_name }} {{ current_user.last_name }}</h1>
+            <h1 class="u-custom-font u-text u-text-body-alt-color u-text-2">добро пожаловать. это место для тебя</h1>
+            <a href="postcreate" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-hover-custom-color-2 u-radius-20 u-btn-1"><span class="u-file-icon u-icon u-icon-1"><img src="/static/CSS/images/481874.png" alt=""></span>пост
+            </a>
+            <div class="u-form u-form-1">
+              <form action="https://forms.nicepagesrv.com/Form/Process" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="email" name="form" style="padding: 10px;">
+                <div class="u-form-file-upload u-form-group">
+                  <label for="name-3849" class="u-custom-font u-label u-text-body-alt-color u-label-1">файл с аватаркой</label>
+                  <input type="file" placeholder="Enter your Name" id="name-3849" name="filename" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" accept="jpg, jpeg, png">
+                </div>
+                <div class="u-align-left u-form-group u-form-submit">
+                  <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-custom-font u-hover-custom-color-2 u-radius-20 u-btn-2"><span class="u-file-icon u-icon"><img src="/static/CSS/images/2102647.png" alt=""></span>&nbsp;загрузить<br>
+                  </a>
+                  <input type="submit" value="submit" class="u-form-control-hidden">
+                </div>
+                <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+                <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+                <input type="hidden" value="" name="recaptchaResponse">
+                <input type="hidden" name="formServices" value="">
+              </form>
+            </div>
+            <a href="messagecreate" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-hover-custom-color-2 u-radius-20 u-btn-3"><span class="u-file-icon u-icon u-icon-3"><img src="/static/CSS/images/481874.png" alt=""></span>cообщение
+            </a>
+          </div>
+        </div>
+
+          <ul>
+              {% for post in posts %}
+        <div class="glass_border u-border-3 u-border-grey-40 u-container-style u-expanded-width u-group u-group-2">
+          <div class="u-container-layout u-container-layout-2">
+            <h1 class="u-align-left u-custom-font u-text u-text-body-alt-color u-text-3">{{ post.author_first }} {{ post.author_last }}</h1>
+            <img class="u-image u-image-round u-preserve-proportions u-radius-27 u-image-2" src="{{ url('static', filename=current_user.avatar_url) }}" alt="" data-image-width="4320" data-image-height="4320">
+            <h1 class="u-align-left u-custom-font u-text u-text-body-alt-color u-text-4">{{ post.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</h1>
+            <a href="postcreate" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-hover-custom-color-2 u-radius-50 u-btn-4"><span class="u-file-icon u-icon u-icon-4"><img src="/static/CSS/images/1077035.png" alt=""></span>&nbsp;
+            </a>
+            <a href="postcreate" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-hover-custom-color-2 u-radius-50 u-btn-5"><span class="u-file-icon u-icon u-icon-5"><img src="/static/CSS/images/1214428.png" alt=""></span>&nbsp;
+            </a>
+            <p class="u-align-justify u-text u-text-5"> {{ post.message }} </p>
+          </div>
+        </div>
+              {% endfor %}
+          </ul>
+      </div>
+    </section>
+  {% endif %}
+</body></html>

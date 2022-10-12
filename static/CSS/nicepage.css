@@ -38684,7 +38684,8 @@ a.u-link.u-text-hover-grey-90:hover {
 
 /*end-variables sitestylecss*/
  .u-header {
-  min-height: 100vh;
+  min-height: 60px;
+     max-height: 60px;
 }
 
 .u-header .u-menu-1 {
