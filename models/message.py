@@ -25,11 +25,13 @@ class Message:
             'str_to_user': to_user,
             'to_user': ObjectId(to_user),
             'message': message,
-            'author_first' : author['first_name'],
-            'author_last' : author['last_name'],
-            'recipient_first' : recipient['first_name'],
-            'recipient_last' : recipient['last_name'],
-            'date_created': datetime.utcnow()
+            'author_first': author['first_name'],
+            'author_last': author['last_name'],
+            'recipient_first': recipient['first_name'],
+            'recipient_last': recipient['last_name'],
+            'date_created': datetime.utcnow(),
+            'contents': [],
+            'date_sent': ""
         }
 
         await db.messages.insert_one(data)
@@ -40,7 +42,6 @@ class Message:
 
     @staticmethod
     async def get_inbox_messages_by_user(db: AsyncIOMotorDatabase, user_id: str, limit=20):
-
         messages_from = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
         messages_to = await db.messages.find({'to_user': ObjectId(user_id)}).to_list(limit)
 
@@ -55,8 +56,8 @@ class Message:
         messages_to_user = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
         messages_from_user = await db.messages.find({'to_user': ObjectId(user_id)}).to_list(limit)
         for message in messages_to_user:
-            #if message['from_user']
-            #in progress
+            # if message['from_user']
+            # in progress
             pass
 
     @staticmethod

@@ -1,3 +1,6 @@
+{% if not(current_user) %}
+    <meta http-equiv="refresh" content="0; url={{ url('welcome') }}"/>
+{% endif %}
 <!DOCTYPE html>
 <html style="font-size: 16px;" lang="en"><head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +35,7 @@
           </a>
         </div>
         <div class="u-custom-menu u-nav-container">
-          <ul class="u-custom-font u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="index" style="padding: 10px;">место для себя</a>
+          <ul class="u-custom-font u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="/" style="padding: 10px;">место для себя</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{{ url('friends') }}" style="padding: 10px;">мои друзья</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{{ url('messages') }}" style="padding: 10px;">мои сообщения</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{{ url('people') }}" style="padding: 10px;">поиск людей</a>
@@ -77,11 +80,4 @@
         </div>
       </div>
     </section>
-    
-    
-    <footer class="u-align-center u-clearfix u-footer u-white u-footer" id="sec-933a"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-custom-font u-small-text u-text u-text-variant u-text-1">место для себя - 0x3L1tE - 2022</p>
-      </div></footer>
-
-  
 </body></html>
