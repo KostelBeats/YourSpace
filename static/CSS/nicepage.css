@@ -1028,7 +1028,7 @@ ol {
 .u-btn {
   /*display: inline-block;*/
   display: table;
-
+  /*TODO maye need another solution for negative marin*/
   cursor: pointer;
   color: inherit;
   font-size: inherit;
@@ -38684,111 +38684,84 @@ a.u-link.u-text-hover-grey-90:hover {
 
 /*end-variables sitestylecss*/
  .u-header {
+  background-image: none;
+  background-position: 50% 50%;
   min-height: 60px;
-     max-height: 60px;
 }
 
 .u-header .u-menu-1 {
-  margin: 23px 0 0 auto;
+  margin: 12px auto;
 }
 
 .u-header .u-nav-1 {
   font-family: Jost;
   font-size: 1rem;
-  letter-spacing: normal;
+  font-weight: normal;
+}
+
+.u-header .u-sidenav-1 {
+  width: 250px;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .u-header .u-nav-2 {
   font-size: 1.25rem;
-}
-
-.u-header .u-text-1 {
-  margin: -30px auto 28px calc(((100% - 1140px) / 2) + 516px);
+  font-family: Jost;
 }
 @media (max-width: 1199px) {
   .u-header .u-menu-1 {
     width: auto;
   }
-
-  .u-header .u-text-1 {
-    font-family: Jost;
-    width: auto;
-    margin-top: -30px;
-    margin-bottom: 29px;
-    margin-left: calc(((100% - 940px) / 2) + -35px);
-  }
 }
-@media (max-width: 991px) {
-  .u-header .u-menu-1 {
-    margin-top: 22px;
-    margin-right: calc(((100% - 720px) / 2) + -35px);
-  }
 
-  .u-header .u-text-1 {
-    margin-top: -28px;
-    margin-bottom: 33px;
-    margin-left: calc(((100% - 720px) / 2) + -35px);
-  }
-}
-@media (max-width: 767px) {
-  .u-header .u-menu-1 {
-    margin-top: 26px;
-    margin-right: calc(((100% - 540px) / 2) + -35px);
-  }
 
-  .u-header .u-text-1 {
-    margin-top: -32px;
-    margin-left: calc(((100% - 540px) / 2) + -35px);
-  }
-}
-@media (max-width: 575px) {
-  .u-header .u-menu-1 {
-    margin-top: 25px;
-    margin-right: calc(((100% - 340px) / 2) + -39px);
-  }
 
-  .u-header .u-text-1 {
-    margin-top: -28px;
-    margin-bottom: 30px;
-    margin-left: calc(((100% - 340px) / 2) + -45px);
-  }
-}
  .u-footer {
   background-image: none;
 }
 
 .u-footer .u-sheet-1 {
-  min-height: 125px;
+  min-height: 60px;
 }
 
 .u-footer .u-text-1 {
   width: 417px;
   font-family: Jost;
   font-size: 1.125rem;
-  margin: 48px auto 49px;
+  margin: 16px auto 0;
 }
 @media (max-width: 1199px) {
-  .u-footer .u-sheet-1 {
-    min-height: 99px;
+  .u-footer .u-text-1 {
+    margin-top: 18px;
   }
 }
 @media (max-width: 991px) {
   .u-footer .u-sheet-1 {
     min-height: 76px;
   }
+
+  .u-footer .u-text-1 {
+    margin-top: 24px;
+  }
 }
 @media (max-width: 767px) {
   .u-footer .u-sheet-1 {
     min-height: 57px;
   }
+
+  .u-footer .u-text-1 {
+    margin-top: 15px;
+  }
 }
 @media (max-width: 575px) {
   .u-footer .u-sheet-1 {
-    min-height: 36px;
+    min-height: 44px;
   }
 
   .u-footer .u-text-1 {
-    width: 340px;
+    width: auto;
+    margin: 8px 0 6px;
   }
 }
 

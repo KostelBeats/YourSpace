@@ -51,6 +51,15 @@ class Message:
     # Outputs: List of sent messages
 
     @staticmethod
+    async def get_chats(db: AsyncIOMotorDatabase, user_id: str, limit=20):
+        messages_to_user = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
+        messages_from_user = await db.messages.find({'to_user': ObjectId(user_id)}).to_list(limit)
+        for message in messages_to_user:
+            #if message['from_user']
+            #in progress
+            pass
+
+    @staticmethod
     async def get_send_messages_by_user(db: AsyncIOMotorDatabase, user_id: str, limit=20):
         messages = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
         return messages

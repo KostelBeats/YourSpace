@@ -13,7 +13,7 @@ from models.user import User
 
 class FriendsView(web.View):
 
-    @aiohttp_jinja2.template('friends.html')
+    @aiohttp_jinja2.template('friends_list.html')
     async def get(self):
         if 'user' not in self.session:
             return web.HTTPFound(location=self.app.router['error_403'].url_for())
@@ -33,12 +33,14 @@ class FriendsView(web.View):
 
 class UserFriends(web.View):
 
-    @aiohttp_jinja2.template('friends_list.html')
+    @aiohttp_jinja2.template('friends.html')
     async def get(self):
+        print(self.session)
         if 'user' not in self.session:
             return web.HTTPFound(location=self.app.router['error_403'].url_for())
 
         users = await User.get_user_friends(db=self.app['db'], user_id=self.session['user']['_id'])
+        print(users)
         return dict(friends=users)
 
     async def post(self):

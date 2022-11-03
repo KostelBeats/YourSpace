@@ -4,11 +4,10 @@
 # Made by 0xR from The 0x3L1tE
 # 2022, Alexey Shaforostov Ilya Fatkin, Denis Panchenko, Russian University of Transport, УИБ-212
 
-from handlers.base import Index, Login, Signup, Logout, PostView, Welcome, Error404, Error403, Error500
+from handlers.base import Index, Login, Signup, Logout, Welcome, Error404, Error403, Error500
 from handlers.avatar import Avatar
 from handlers.friends import FriendsView, UserFriends
 from handlers.messages import MessageView
-from models.post import Post
 
 from config.common import BaseConfig
 
@@ -25,15 +24,12 @@ def setup_routes(app):
 
     app.router.add_post('/save_avatar', Avatar.post, name='save_avatar')
 
-    app.router.add_post('/add_post', PostView.post, name='add_post')
-    app.router.add_post('/edit_post', Post.edit_post, name='edit_post')
-
     app.router.add_get('/friends', FriendsView.get, name='friends')
     app.router.add_post('/add_friend', FriendsView.post, name='add_friend')
     app.router.add_post('/delete_friend', FriendsView.post, name='remove_friend')
 
-    app.router.add_get('/my_friends', UserFriends.get, name='my_friends')
-    app.router.add_post('/my_friends', UserFriends.post, name='my_friend')
+    app.router.add_get('/people', UserFriends.get, name='people')
+    app.router.add_post('/people', UserFriends.post, name='people')
 
     app.router.add_get('/messages', MessageView.get, name='messages')
     app.router.add_post('/send_message', MessageView.post, name='send_message')

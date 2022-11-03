@@ -58,6 +58,10 @@ class User:
             data['password'] = hashlib.sha256(data['password'].encode('utf8')).hexdigest()
             data['friends'] = []
             data['friends_approval'] = []
+            data['location'] = 'не указано'
+            data['age'] = 'не указан'
+            data['work'] = 'не указано'
+            data['bio'] = 'пустой статус'
             result = await db.users.insert_one(data)
             return result
         else:
