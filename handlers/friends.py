@@ -6,7 +6,6 @@
 
 import aiohttp_jinja2
 from aiohttp import web
-from aiohttp.abc import Request
 
 from models.user import User
 
