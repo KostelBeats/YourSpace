@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-{% if not current_user %}
-<meta http-equiv="refresh" content="0; url={{ url('welcome' )}}" />
-{% endif %}
 <html style="font-size: 16px;" lang="en"><head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="It&amp;apos;s That Design Feeling">
     <meta name="description" content="">
-    <title>место для себя - ваш профиль</title>
+    <title>{{ user.first_name }} {{ user.last_name }}</title>
     <link rel="stylesheet" href="/static/CSS/nicepage.css" media="screen">
 <link rel="stylesheet" href="/static/CSS/profile.css" media="screen">
     <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/nicepage.js" defer=""></script>
-
+    <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/" defer=""></script>
     
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jost:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
@@ -21,7 +16,7 @@
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
-		"name": ""
+		"name": "YourPlace"
 }</script>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="profile">
@@ -61,20 +56,20 @@
         <div class="u-expanded-width u-tab-links-align-justify u-tabs u-tabs-1">
           <ul class="u-border-1 u-border-grey-25 u-tab-list u-unstyled" role="tablist">
             <li class="u-tab-item u-tab-item-1" role="presentation">
-              <a class="active u-border-2 u-border-active-grey-15 u-border-grey-75 u-border-hover-grey-15 u-button-style u-custom-font u-tab-link u-text-active-palette-1-base u-text-black u-text-hover-palette-1-light-2 u-white u-tab-link-1" id="link-tab-2917" href="#tab-2917" role="tab" aria-controls="tab-2917" aria-selected="true">место для себя - ваш профиль</a>
+              <a class="active u-border-2 u-border-active-grey-15 u-border-grey-75 u-border-hover-grey-15 u-button-style u-custom-font u-tab-link u-text-active-palette-1-base u-text-black u-text-hover-palette-1-light-2 u-white u-tab-link-1" id="link-tab-2917" href="#tab-2917" role="tab" aria-controls="tab-2917" aria-selected="true">место для себя - профиль пользователя</a>
             </li>
           </ul>
           <div class="u-tab-content">
             <div class="u-container-style u-grey-90 u-shape-rectangle u-tab-active u-tab-pane u-tab-pane-1" id="tab-2917" role="tabpanel" aria-labelledby="link-tab-2917">
               <div class="u-container-layout u-container-layout-1">
-                <img alt="" class="u-image u-image-round u-radius-50 u-image-1" data-image-width="2159" data-image-height="2160" src="{{ current_user.avatar_url }}">
-                <h1 class="cut-text_desk u-align-left u-custom-font u-text u-text-1">{{ current_user.first_name }} {{ current_user.last_name }}</h1><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-1"><img src="/static/CSS/images/icons/pencil_yellow.png" onclick="location.href = '{{ url('edit_profile') }}';" alt=""></span>
-                <p title="{{ current_user.location }}" class="cut-text_desk u-text u-text-2">{{ current_user.location }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-2"><img src="/static/CSS/images/icons/location_yellow.png" alt=""></span>
-                <p title="{{ current_user.age }}" class="cut-text_desk u-text u-text-3">{{ current_user.age }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-3"><img src="/static/CSS/images/icons/age_yellow.png" alt=""></span>
-                <p title="{{ current_user.work }}" class="cut-text_desk u-align-left u-text u-text-4">{{ current_user.work}}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-4"><img src="/static/CSS/images/icons/work_yellow.png" alt=""></span>
-                <p title="{{ current_user.nickname }}" class="cut-text_desk u-align-left u-text u-text-5">{{ current_user.nickname }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-5"><img src="/static/CSS/images/icons/net_yellow.png" alt=""></span>
-                <p title="{{ current_user.email }}" class="cut-text_desk u-align-left u-text u-text-6">{{ current_user.email }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-6"><img src="/static/CSS/images/icons/at_yellow.png" alt=""></span>
-                <p title="{{ current_user.bio }}" class="cut-text_desk u-text u-text-7">{{ current_user.bio }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-7"><img src="/static/CSS/images/icons/info_yellow.png" alt=""></span>
+                <img alt="" class="u-image u-image-round u-radius-50 u-image-1" data-image-width="2159" data-image-height="2160" src="{{ user.avatar_url }}">
+                <h1 class="cut-text_desk u-align-left u-custom-font u-text u-text-1">{{ user.first_name }} {{ user.last_name }}</h1><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-1"><img src="/static/CSS/images/icons/pencil_white.png" alt=""></span>
+                <p title="{{ user.location }}" class="cut-text_desk u-text u-text-2">{{ user.location }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-2"><img src="/static/CSS/images/icons/location_yellow.png" alt=""></span>
+                <p title="{{ user.age }}" class="cut-text_desk u-text u-text-3">{{ user.age }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-3"><img src="/static/CSS/images/icons/age_yellow.png" alt=""></span>
+                <p title="{{ user.work }}" class="cut-text_desk u-align-left u-text u-text-4">{{ user.work}}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-4"><img src="/static/CSS/images/icons/work_yellow.png" alt=""></span>
+                <p title="{{ user.nickname }}" class="cut-text_desk u-align-left u-text u-text-5">{{ user.nickname }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-5"><img src="/static/CSS/images/icons/net_yellow.png" alt=""></span>
+                <p title="{{ user.email }}" class="cut-text_desk u-align-left u-text u-text-6">{{ user.email }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-6"><img src="/static/CSS/images/icons/at_yellow.png" alt=""></span>
+                <p title="{{ user.bio }}" class="cut-text_desk u-text u-text-7">{{ user.bio }}</p><span class="u-file-icon u-icon u-text-custom-color-1 u-icon-7"><img src="/static/CSS/images/icons/info_yellow.png" alt=""></span>
               </div>
             </div>
           </div>

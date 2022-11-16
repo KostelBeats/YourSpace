@@ -4,12 +4,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>messages</title>
+    <title>chat</title>
     <link rel="stylesheet" href="/static/CSS/nicepage.css" media="screen">
-<link rel="stylesheet" href="/static/CSS/messages.css" media="screen">
+<link rel="stylesheet" href="/static/CSS/chat.css" media="screen">
     <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 4.21.12, nicepage.com">
     
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jost:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
@@ -18,14 +17,14 @@
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
-		"name": ""
+		"name": "YourPlace"
 }</script>
     <meta name="theme-color" content="#478ac9">
-    <meta property="og:title" content="messages">
+    <meta property="og:title" content="chat">
     <meta property="og:type" content="website">
   </head>
   <body class="u-body u-grey-80 u-xl-mode" data-lang="en"><header class="skrollable u-align-center u-clearfix u-header u-parallax u-valign-middle u-white u-header" id="sec-27e0"><nav class="u-align-left u-menu u-menu-one-level u-offcanvas u-offcanvas-shift u-menu-1" data-responsive-from="MD" data-position="mainmenu">
-        <div class="menu-collapse u-custom-font" style="font-size: 1rem; letter-spacing: 0px; font-family: Jost,sans-serif;">
+        <div class="menu-collapse u-custom-font" style="font-size: 1rem; letter-spacing: 0px; font-family: Jost;">
           <a class="u-button-style u-custom-border u-custom-border-color u-custom-borders u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
             <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
             <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
@@ -55,19 +54,42 @@
       </nav></header>
     <section class="u-clearfix u-image u-image-tiles u-section-1" id="sec-99bc" data-image-width="2000" data-image-height="1500">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="glass_border u-container-style u-expanded-width u-grey-10 u-group u-group-1">
-          <div class="u-container-layout u-container-layout-1">
-            <img class="u-image u-image-round u-radius-10 u-image-1" src="images/R0xVTQ29ITfXkVrQHl6nF-U-66ppWmxY-1VAdYeybbjvF_8GF9AM9MUnG1cwR0LqBI6J5SG02F-MQiMnUbZtnozx-min.jpg" alt="" data-image-width="2159" data-image-height="2160">
-            <p class="cut-text_desk u-text u-text-default u-text-1">Dummy Tester</p>
-            <p class="cut-text_desk u-text u-text-2">
-              <span style="font-size: 24px;">ура! чаты!</span>
-            </p>
-            <p class="cut-text_desk u-hidden-xs u-text u-text-3">две минуты назад.</p>
+          <ul>
+              {% for message in messages %}
+                <div class="glass_border u-container-style u-expanded-width u-grey-10 u-group u-group-1">
+                  <div class="u-container-layout u-container-layout-1">
+                    <img class="u-image u-image-round u-radius-10 u-image-1" src="{{ message.author_avatar_url }}" alt="" data-image-width="2159" data-image-height="2160">
+                    <p class="cut-text_desk u-text u-text-default u-text-1">{{ message.author_first }}</p>
+                    <p class="u-text u-text-2">
+                      <span style="font-size: 24px;">{{ message.message }}</span>
+                    </p>
+                  </div>
+                </div>
+              {% endfor %}
+          </ul>
+        <div class="glass_border u-container-style u-expanded-width u-grey-10 u-group u-group-2">
+          <div class="u-container-layout u-container-layout-2">
+            <div class="u-form u-form-1">
+              <form action="{{ url('send_message') }}" method="post" class="u-clearfix u-form-horizontal u-form-spacing-32 u-inner-form" source="custom" name="form" style="padding: 10px;">
+                <div class="u-form-email u-form-group u-label-none">
+                    <input name="from_user" value="{{ current_user._id }}" type="hidden">
+                    <input name="to_user" value="{{ target_user._id }}" type="hidden">
+                    <input name="reason" value="s" type="hidden">
+                  <input type="text" placeholder="ваше сообщение..." id="email-bb9b" name="message_text" class="u-custom-font u-grey-10 u-input u-input-rectangle u-radius-50 u-input-1" required="">
+                </div>
+                <div class="u-align-center u-form-group u-form-submit u-label-none">
+                  <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-4-base u-radius-50 u-btn-1"><span class="u-file-icon u-icon"><img src="/static/CSS/images/icons/send.png" alt=""></span>
+                    <br>
+                  </a>
+                  <input type="submit" value="submit" class="u-form-control-hidden">
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-        <a href="https://nicepage.com/website-mockup" class="u-btn u-btn-round u-button-style u-custom-font u-hover-palette-1-light-2 u-palette-1-light-3 u-radius-50 u-btn-1"><span class="u-file-icon u-icon u-icon-1"><img src="/static/CSS/images/icons/back.png" alt=""></span>
-        </a>
         <a href="https://nicepage.com/website-mockup" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-2 u-palette-1-light-3 u-radius-50 u-btn-2"><span class="u-file-icon u-icon"><img src="/static/CSS/images/icons/fwd.png" alt=""></span>&nbsp;
+        </a>
+        <a href="https://nicepage.com/website-mockup" class="u-btn u-btn-round u-button-style u-custom-font u-hover-palette-1-light-2 u-palette-1-light-3 u-radius-50 u-btn-3"><span class="u-file-icon u-icon u-icon-3"><img src="/static/CSS/images/icons/back.png" alt=""></span>
         </a>
       </div>
     </section>

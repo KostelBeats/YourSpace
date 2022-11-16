@@ -25,7 +25,12 @@ class FriendsView(web.View):
             return web.HTTPFound(location=self.app.router['error_403'].url_for())
 
         data = await self.post()
-        await User.add_friend(db=self.app['db'], user_id=self.session['user']['_id'], friend_id=data['uid'])
+        if data['opr_type'] == 'add':
+            await User.add_friend(db=self.app['db'], user_id=data['uid'], friend_id=self.session['user']['_id'])
+        elif data['opr_type'] == 'apr':
+            await User.friend_allow(db=self.app['db'], user_id=self.session['user']['_id'], friend_id=data['uid'])
+        elif data['opr_type'] == 'del':
+            await User.friend_remove(db=self.app['db'], user_id=self.session['user']['_id'], friend_id=data['uid'])
         location = self.app.router['friends'].url_for()
         return web.HTTPFound(location=location)
 
@@ -37,9 +42,10 @@ class UserFriends(web.View):
         if 'user' not in self.session:
             return web.HTTPFound(location=self.app.router['error_403'].url_for())
 
-        users = await User.get_user_friends(db=self.app['db'], user_id=self.session['user']['_id'])
+        to_allow = await User.get_user_allow_list(db=self.app['db'], user_id=self.session['user']['_id'])
+        friends = await User.get_user_friends(db=self.app['db'], user_id=self.session['user']['_id'])
 
-        return dict(friends=users)
+        return dict(allowlist=to_allow, friends=friends)
 
     async def post(self):
         if 'user' not in self.session:

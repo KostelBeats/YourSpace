@@ -31,7 +31,8 @@ class Avatar(web.View):
             content = avatar.file.read()
             f.write(content)
 
-        await User.save_avatar_url(db=self.app['db'], user_id=user['_id'], url='/avatars/{}'.format(avatar.filename))
+        url = '/static/avatars/{}'.format(avatar.filename)
+        await User.save_avatar_url(db=self.app['db'], user_id=user['_id'], url='static/avatars/{}'.format(avatar.filename))
 
         location = self.app.router['index'].url_for()
         return web.HTTPFound(location=location)

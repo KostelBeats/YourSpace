@@ -92,8 +92,29 @@ class User:
 
     @staticmethod
     async def add_friend(db: AsyncIOMotorDatabase, user_id: str, friend_id: str):
-        await db.users.update_one({'_id': ObjectId(user_id)}, {'$addToSet': {'friends': ObjectId(friend_id)}})
-        # await db.users.update_one({'_id': ObjectId(user_id)}, {'$addToSet': {'friends_approval': ObjectId(friend_id)}})
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$addToSet': {'friends_approval': ObjectId(friend_id)}})
+
+    @staticmethod
+    async def edit_main(db: AsyncIOMotorDatabase, user_id: str, data):
+        if data['new_pass'] == data['passcheck']:
+            await db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'first_name': data['first_name']}})
+            await db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'last_name': data['last_name']}})
+            await db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'email': data['email']}})
+            await db.users.update_one({'_id': ObjectId(user_id)},
+                                      {'$set': {
+                                          'password': hashlib.sha256(data['new_pass'].encode('utf8')).hexdigest()}})
+            return 0
+
+        return -1
+
+    @staticmethod
+    async def edit_sec(db: AsyncIOMotorDatabase, user_id: str, data):
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'location': data['location']}})
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'work': data['work']}})
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'age': data['age']}})
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'nickname': data['nickname']}})
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'bio': data['bio']}})
+        return 0
 
     # Approve friend request
     # Inputs: Database, User ID, Target ID
@@ -102,7 +123,8 @@ class User:
     @staticmethod
     async def friend_allow(db: AsyncIOMotorDatabase, user_id: str, friend_id: str):
         await db.users.update_one({'_id': ObjectId(user_id)}, {'$addToSet': {'friends': ObjectId(friend_id)}})
-        await db.users.update_one({'_id': ObjectId(user_id)}, {'$unset': {'friends_approval': ObjectId(friend_id)}})
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$pull': {'friends_approval': ObjectId(friend_id)}})
+        await db.users.update_one({'_id': ObjectId(friend_id)}, {'$addToSet': {'friends': ObjectId(user_id)}})
 
     # Remove friend back to approval state
     # Inputs: Database, User ID, Target ID
@@ -111,7 +133,8 @@ class User:
     @staticmethod
     async def friend_remove(db: AsyncIOMotorDatabase, user_id: str, friend_id: str):
         await db.users.update_one({'_id': ObjectId(user_id)}, {'$addToSet': {'friends_approval': ObjectId(friend_id)}})
-        await db.users.update_one({'_id': ObjectId(user_id)}, {'$unset': {'friends': ObjectId(friend_id)}})
+        await db.users.update_one({'_id': ObjectId(user_id)}, {'$pull': {'friends': ObjectId(friend_id)}})
+        await db.users.update_one({'_id': ObjectId(friend_id)}, {'$pull': {'friends': ObjectId(user_id)}})
 
     # Get list of user's friends
     # Inputs: Database, User ID, List size
@@ -123,19 +146,13 @@ class User:
         user_friends = await db.users.find({'_id': {'$in': user['friends']}}).to_list(limit)
         return user_friends
 
+    @staticmethod
+    async def get_user_allow_list(db: AsyncIOMotorDatabase, user_id: str, limit=20):
+        user = await db.users.find_one({'_id': ObjectId(user_id)})
+        user_friends = await db.users.find({'_id': {'$in': user['friends_approval']}}).to_list(limit)
+        return user_friends
+
     # Add particular user to blacklist
     # Inputs: Database, User ID, Target ID
     # Outputs: None. This function adds Target ID to user's blacklist and
-        # removes it from user's friend / friend approval list
-
-    @staticmethod
-    async def add_to_blacklist(db: AsyncIOMotorDatabase, user_id: str, target_id: str):
-        pass
-
-    # Remove particular user from blacklist
-    # Inputs: Database, User ID, Target ID
-    # Outputs: None. This function removes Target ID from user's blacklist
-
-    @staticmethod
-    async def remove_from_blacklist(db: AsyncIOMotorDatabase, user_id: str, target_id: str):
-        pass
+    # removes it from user's friend / friend approval list

@@ -8,6 +8,7 @@ import aiohttp_jinja2
 from aiohttp import web
 
 from models.message import Message
+from models.user import User
 
 
 class MessageView(web.View):
@@ -17,7 +18,9 @@ class MessageView(web.View):
         if 'user' not in self.session:
             return web.HTTPForbidden()
 
-        messages = await Message.get_inbox_messages_by_user(db=self.app['db'], user_id=self.session['user']['_id'])
+        friends = await User.get_user_friends(db=self.app['db'], user_id=self.session['user']['_id'])
+        messages = await Message.get_chats(db=self.app['db'], user_id=self.session['user']['_id'],
+                                           limit=20, friends=friends)
 
         return dict(messages=messages)
 

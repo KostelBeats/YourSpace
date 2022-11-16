@@ -4,7 +4,8 @@
 # Made by 0xR from The 0x3L1tE
 # 2022, Alexey Shaforostov Ilya Fatkin, Denis Panchenko, Russian University of Transport, УИБ-212
 
-from handlers.base import Index, Login, Signup, Logout, Welcome, Error404, Error403, Error500
+from handlers.base import Index, Login, Signup, Logout, Welcome, Error404, Error403, Error500,\
+    Profile, EditProfile, Chat
 from handlers.avatar import Avatar
 from handlers.friends import FriendsView, UserFriends
 from handlers.messages import MessageView
@@ -15,6 +16,8 @@ from config.common import BaseConfig
 def setup_routes(app):
     print('setting up routes...')
     app.router.add_get('/', Index.get, name='index')
+    app.router.add_get('/edit_profile', EditProfile.get, name='edit_profile')
+    app.router.add_post('/edit_profile', EditProfile.post, name="edit_profile")
 
     app.router.add_get('/login', Login.get, name='login')
     app.router.add_post('/login', Login.post)
@@ -23,16 +26,18 @@ def setup_routes(app):
     app.router.add_get('/logout', Logout.get, name='logout')
 
     app.router.add_post('/save_avatar', Avatar.post, name='save_avatar')
+    app.router.add_get('/profile', Profile.get, name='target_profile')
 
-    app.router.add_get('/friends', FriendsView.get, name='friends')
-    app.router.add_post('/add_friend', FriendsView.post, name='add_friend')
-    app.router.add_post('/delete_friend', FriendsView.post, name='remove_friend')
-
-    app.router.add_get('/people', UserFriends.get, name='people')
+    app.router.add_get('/people', FriendsView.get, name='people')
     app.router.add_post('/people', UserFriends.post, name='people')
+    app.router.add_post('/add_friend', FriendsView.post, name='add_friend')
+
+    app.router.add_get('/friends', UserFriends.get, name='friends')
 
     app.router.add_get('/messages', MessageView.get, name='messages')
     app.router.add_post('/send_message', MessageView.post, name='send_message')
+    app.router.add_get('/chat', Chat.get, name='chat')
+    app.router.add_post('/chat', Chat.post, name='chat')
 
     app.router.add_get('/welcome', Welcome.get, name='welcome')
 
