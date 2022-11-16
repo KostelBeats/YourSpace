@@ -26,7 +26,6 @@ class Index(web.View):
         friends = []
         if 'user' in session:
             pass
-        print(user)
         return dict(conf=conf, user=user, friends=friends)
 
 
@@ -46,12 +45,9 @@ class EditProfile(web.View):
             return web.HTTPForbidden()
 
         data = await self.post()
-        print(data)
         if data['edit_type'] == '0':
-            print('Editing the info in the first tab!')
             await User.edit_main(db=self.app['db'], user_id=session['user']['_id'], data=data)
         elif data['edit_type'] == '1':
-            print('Editing the info in the second tab!')
             await User.edit_sec(db=self.app['db'], user_id=session['user']['_id'], data=data)
 
         location = self.app.router['index'].url_for()
@@ -181,12 +177,9 @@ class Chat(web.View):
         # Fuck you, HTTP!
 
         target_id = str(self.url).split("?")[1].split("&x")[0].split("t_profile=")[1]
-
         session = await get_session(self)
         target = await User.get_user_by_id(db=self.app['db'], user_id=target_id)
-        print('target:', target, 'session', session['user'])
-        messages = await Message.get_chat(db=self.app['db'], user_id=target_id, limit=20)
-        print(messages)
+        messages = await Message.get_chat(db=self.app['db'], user_id=target_id, limit=1024)
 
         return dict(current_user=session['user'], target_user=target, messages=messages)
 

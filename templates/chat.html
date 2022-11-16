@@ -33,19 +33,19 @@
         </div>
         <div class="u-custom-menu u-nav-container">
           <ul class="u-custom-font u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="index" style="padding: 10px;">место для себя</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="myfriends" style="padding: 10px;">мои друзья</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="mymessages" style="padding: 10px;">мои сообщения</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="findpeople" style="padding: 10px;">поиск людей</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{{ url('friends') }}" style="padding: 10px;">мои друзья</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{{ url('messages') }}" style="padding: 10px;">мои сообщения</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{{ url('people') }}" style="padding: 10px;">поиск людей</a>
 </li></ul>
         </div>
         <div class="u-custom-menu u-nav-container-collapse">
           <div class="u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav u-white u-sidenav-1" data-offcanvas-width="250">
             <div class="u-inner-container-layout u-sidenav-overflow">
               <div class="u-menu-close"></div>
-              <ul class="u-align-center u-custom-font u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="index">место для себя</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="myfriends">мои друзья</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="mymessages">мои сообщения</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="findpeople">поиск людей</a>
+              <ul class="u-align-center u-custom-font u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/">место для себя</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url('friends') }}">мои друзья</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url('messages') }}">мои сообщения</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url('people') }}">поиск людей</a>
 </li></ul>
             </div>
           </div>
@@ -70,7 +70,7 @@
         <div class="glass_border u-container-style u-expanded-width u-grey-10 u-group u-group-2">
           <div class="u-container-layout u-container-layout-2">
             <div class="u-form u-form-1">
-              <form action="{{ url('send_message') }}" method="post" class="u-clearfix u-form-horizontal u-form-spacing-32 u-inner-form" source="custom" name="form" style="padding: 10px;">
+              <form action="{{ url('send_message') }}" method="post" class="u-clearfix u-form-horizontal u-form-spacing-32 u-inner-form" source="custom" name="form" style="padding: 10px;" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
                 <div class="u-form-email u-form-group u-label-none">
                     <input name="from_user" value="{{ current_user._id }}" type="hidden">
                     <input name="to_user" value="{{ target_user._id }}" type="hidden">
@@ -83,12 +83,17 @@
                   </a>
                   <input type="submit" value="submit" class="u-form-control-hidden">
                 </div>
+
               </form>
             </div>
           </div>
         </div>
-        <a href="https://nicepage.com/website-mockup" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-2 u-palette-1-light-3 u-radius-50 u-btn-2"><span class="u-file-icon u-icon"><img src="/static/CSS/images/icons/fwd.png" alt=""></span>&nbsp;
-        </a>
+      <form action="{{ url('chat') }}" method="get">
+          <input type="hidden" name="t_profile" value="{{ target_user._id }}">
+          <input type="hidden" name="offset" value="20">
+        <button class="u-btn u-btn-round u-button-style u-hover-palette-1-light-2 u-palette-1-light-3 u-radius-50 u-btn-2"><span class="u-file-icon u-icon"><img src="/static/CSS/images/icons/fwd.png" alt=""></span>&nbsp;
+        </button>
+      </form>
         <a href="https://nicepage.com/website-mockup" class="u-btn u-btn-round u-button-style u-custom-font u-hover-palette-1-light-2 u-palette-1-light-3 u-radius-50 u-btn-3"><span class="u-file-icon u-icon u-icon-3"><img src="/static/CSS/images/icons/back.png" alt=""></span>
         </a>
       </div>

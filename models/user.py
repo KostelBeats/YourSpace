@@ -81,7 +81,7 @@ class User:
     # Outputs: List of mutual or possible friends
 
     @staticmethod
-    async def get_user_friends_suggestions(db: AsyncIOMotorDatabase, user_id: str, limit=20):
+    async def get_user_friends_suggestions(db: AsyncIOMotorDatabase, user_id: str, limit=1024):
         query = {'_id': {'$ne': ObjectId(user_id)}}
         users = await db.users.find(query).to_list(limit)
         return users
@@ -141,13 +141,13 @@ class User:
     # Outputs: List of user's friends
 
     @staticmethod
-    async def get_user_friends(db: AsyncIOMotorDatabase, user_id: str, limit=20):
+    async def get_user_friends(db: AsyncIOMotorDatabase, user_id: str, limit=1024):
         user = await db.users.find_one({'_id': ObjectId(user_id)})
         user_friends = await db.users.find({'_id': {'$in': user['friends']}}).to_list(limit)
         return user_friends
 
     @staticmethod
-    async def get_user_allow_list(db: AsyncIOMotorDatabase, user_id: str, limit=20):
+    async def get_user_allow_list(db: AsyncIOMotorDatabase, user_id: str, limit=1024):
         user = await db.users.find_one({'_id': ObjectId(user_id)})
         user_friends = await db.users.find({'_id': {'$in': user['friends_approval']}}).to_list(limit)
         return user_friends
