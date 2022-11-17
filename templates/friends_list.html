@@ -69,8 +69,10 @@
               <form action="{{ url('add_friend') }}" method="post">
                 <input type="hidden" name="uid" value="{{ user._id }}">
                   <input value="add" type="hidden" name="opr_type">
+                  {% if user['str_user_id'] not in current_user['friends'] %}
                  <button type="submit" class="u-border-1 u-border-active-palette-2-base u-border-hover-white u-border-no-left u-border-no-right u-border-no-top u-btn u-button-style u-custom-font u-none u-text-body-alt-color u-btn-1"><span class="u-file-icon u-icon u-text-white"><img src="/static/CSS/images/icons/add_white.png" alt=""></span>добавить
             </button>
+                  {% endif %}
             </form>
           </div>
         </div>

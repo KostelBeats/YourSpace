@@ -20,7 +20,7 @@ class MessageView(web.View):
 
         friends = await User.get_user_friends(db=self.app['db'], user_id=self.session['user']['_id'])
         messages = await Message.get_chats(db=self.app['db'], user_id=self.session['user']['_id'],
-                                           limit=20, friends=friends)
+                                           limit=1024, friends=friends)
 
         return dict(messages=messages)
 

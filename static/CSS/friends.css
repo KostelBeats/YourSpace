@@ -1,3 +1,8 @@
+ .u-section-1 {
+  background-image: url("/static/CSS/images/chats_back.png");
+  background-position: 50% 50%;
+}
+
 .u-section-1 .u-sheet-1 {
   min-height: 370px;
 }

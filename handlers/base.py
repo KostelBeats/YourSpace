@@ -168,6 +168,10 @@ class Chat(web.View):
 
     @aiohttp_jinja2.template('chat.html')
     async def get(self):
+        session = await get_session(self)
+
+        if 'user' not in session:
+            return web.HTTPFound(location=self.app.router['error_403'].url_for())
         # WTF? HTTP/get is stupid!
         # getting the uid from url
         # split str(url) to host/page, unfiltered data
@@ -179,7 +183,9 @@ class Chat(web.View):
         target_id = str(self.url).split("?")[1].split("&x")[0].split("t_profile=")[1]
         session = await get_session(self)
         target = await User.get_user_by_id(db=self.app['db'], user_id=target_id)
-        messages = await Message.get_chat(db=self.app['db'], user_id=target_id, limit=1024)
+        messages = await Message.get_chat(db=self.app['db'], user_id=session['user']['_id'],
+                                          target_id=target_id, limit=1024)
+        print(session)
 
         return dict(current_user=session['user'], target_user=target, messages=messages)
 

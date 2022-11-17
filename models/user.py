@@ -62,6 +62,7 @@ class User:
             data['age'] = 'не указан'
             data['work'] = 'не указано'
             data['bio'] = 'пустой статус'
+            data['avatar_url'] = '/static/avatars/no-image.png'
             result = await db.users.insert_one(data)
             return result
         else:

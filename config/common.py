@@ -12,7 +12,7 @@ class BaseConfig:
     debug = True
     app_name = 'YourPlace'
     secret_key = b'TyzLMReLCWUiPsTFMActw_0dtEU7kAcFXHNYYm64DNI='
-    database_name = 'my_database'
+    database_name = 'yourplace_db'
 
     PROJECT_ROOT = pathlib.Path(__file__).parent.parent
     STATIC_DIR = str(PROJECT_ROOT / 'static')

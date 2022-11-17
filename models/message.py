@@ -31,32 +31,22 @@ class Message:
 
         await db.messages.insert_one(data)
 
-    # Get list of inbox messages
-    # Inputs: Database, User ID, List size
-    # Outputs: List of incoming messages
-
-    @staticmethod
-    async def get_last_message(db: AsyncIOMotorDatabase, user_id: str):
-
-        result = await db.messages.find
-    @staticmethod
-    async def get_inbox_messages_by_user(db: AsyncIOMotorDatabase, user_id: str, limit=20):
-        messages_from = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
-        messages_to = await db.messages.find({'to_user': ObjectId(user_id)}).to_list(limit)
-
-        return messages_to + messages_from
-
-    # Get list of sent messages
+    # Get list of sent messages in chat
     # Inputs: Database, User ID, List size
     # Outputs: List of sent messages
 
     @staticmethod
-    async def get_chat(db: AsyncIOMotorDatabase, user_id: str, limit: int):
+    async def get_chat(db: AsyncIOMotorDatabase, target_id: str, user_id: str, limit: int):
 
-        messages_to_user = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
-        messages_from_user = await db.messages.find({'to_user': ObjectId(user_id)}).to_list(limit)
-        messages = messages_to_user + messages_from_user
+        # get inbox
+        messages = await db.messages.find({'from_user': ObjectId(target_id),
+                                           'to_user': ObjectId(user_id)}).to_list(limit)
 
+        # get outbox
+        messages += await db.messages.find({'from_user': ObjectId(user_id),
+                                            'to_user': ObjectId(target_id)}).to_list(limit)
+
+        # sort by date
         messages = sorted(
             messages,
             key=lambda x: (x['date_created'], '%Y-%m-%d %H:%M:%S'), reverse=False
@@ -69,11 +59,6 @@ class Message:
         print(friends)
         result = {}
         return result
-
-    @staticmethod
-    async def get_send_messages_by_user(db: AsyncIOMotorDatabase, user_id: str, limit: int):
-        messages = await db.messages.find({'from_user': ObjectId(user_id)}).to_list(limit)
-        return messages
 
     # Edit message sent by user
     # Inputs: Database, Author, Message ID, Message
