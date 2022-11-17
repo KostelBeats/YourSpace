@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <title>Page 1</title>
     <link rel="stylesheet" href="/static/CSS/nicepage.css" media="screen">
-<link rel="stylesheet" href="/static/CSS/friends.css" media="screen">
+    <link rel="stylesheet" href="/static/CSS/friends.css" media="screen">
     <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="/static/CSS/js_scripts/nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 4.19.3, nicepage.com">
@@ -54,19 +54,20 @@
           <div class="u-black u-menu-overlay u-opacity u-opacity-40"></div>
         </div>
       </nav></header>
-    <section class="u-clearfix u-section-1" id="sec-7ec6">
-        <ul>
-            {% for user in users %}
+    <section class="u-clearfix u-image u-section-1" id="sec-7ec6" data-image-width="2000" data-image-height="1500">
+     <ul>
+         {% for user in users %}
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <div class="css_glass u-container-style u-expanded-width u-grey-10 u-group u-shape-rectangle u-group-1">
+        <div class="css_glass u-container-style u-expanded-width u-group u-hover-feature u-shape-rectangle u-group-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-direction="">
           <div class="u-container-layout u-container-layout-1">
-              <form action="{{ url('target_profile') }}" method="get">
+               <form action="{{ url('target_profile') }}" method="get">
                   <input type="hidden" name="t_profile" value="{{ user._id }}">
                     <input type="image" class="u-image u-image-round u-preserve-proportions u-radius-18 u-image-1" src="{{ user.avatar_url }}" alt="" data-image-width="1080" data-image-height="1080">
 
                   </form>
+
             <p class="u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-1">{{ user.first_name }} {{ user.last_name }}</p>
-              <form action="{{ url('add_friend') }}" method="post">
+         <form action="{{ url('add_friend') }}" method="post">
                 <input type="hidden" name="uid" value="{{ user._id }}">
                   <input value="add" type="hidden" name="opr_type">
                   {% if user['str_user_id'] not in current_user['friends'] %}
