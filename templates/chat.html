@@ -76,12 +76,11 @@
                     <input name="from_user" value="{{ current_user._id }}" type="hidden">
                     <input name="to_user" value="{{ target_user._id }}" type="hidden">
                     <input name="reason" value="s" type="hidden">
-                  <input type="text" placeholder="ваше сообщение..." id="email-bb9b" name="message_text" class="u-custom-font u-grey-10 u-input u-input-rectangle u-radius-50 u-input-1" required="">
+                    <label for="email-bb9b"></label><input type="text" placeholder="ваше сообщение..." id="email-bb9b" name="message_text" class="u-custom-font u-grey-10 u-input u-input-rectangle u-radius-50 u-input-1" required="">
                 </div>
                 <div class="u-align-center u-form-group u-form-submit u-label-none">
-                  <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-4-base u-radius-50 u-btn-1"><span class="u-file-icon u-icon"><img src="/static/CSS/images/icons/send.png" alt=""></span>
-                    <br>
-                  </a>
+                  <button type="submit" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-4-base u-radius-50 u-btn-1"><span class="u-file-icon u-icon"><img src="/static/CSS/images/icons/send.png" alt=""></span>
+                  </button>
                   <input type="submit" value="submit" class="u-form-control-hidden">
                 </div>
 
