@@ -30,6 +30,7 @@ class MessageView(web.View):
 
         location = self.app.router['messages'].url_for()
         data = await self.post()
+        print(data)
 
         if data['reason'] == 'd':
             await Message.delete_message(db=self.app['db'], message_id=data['message_id'])
