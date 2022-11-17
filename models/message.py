@@ -57,6 +57,14 @@ class Message:
     async def get_chats(db: AsyncIOMotorDatabase, user_id: str, limit: int, friends):
 
         print(friends)
+
+        messages = await db.messages.find({'from_user': ObjectId(target_id),
+                                           'to_user': ObjectId(user_id)}).to_list(limit)
+
+        # get outbox
+        messages += await db.messages.find({'from_user': ObjectId(user_id),
+                                            'to_user': ObjectId(target_id)}).to_list(limit)
+        
         result = {}
         return result
 

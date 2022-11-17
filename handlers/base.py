@@ -21,6 +21,7 @@ class Index(web.View):
     async def get(self):
         conf = self.app['config']
         session = await get_session(self)
+        print('index session', session)
         user = {}
         posts = []
         friends = []
@@ -85,10 +86,15 @@ class Login(web.View):
 
     @aiohttp_jinja2.template('login.html')
     async def get(self):
+        session = await get_session(self)
+        print('get login session', session)
+
         return dict()
 
     async def post(self):
         data = await self.post()
+        session = await get_session(self)
+        print('post login session', session)
         email = data['email']
         password = data['password']
         user = await User.get_user_by_email(db=self.app['db'], email=email)

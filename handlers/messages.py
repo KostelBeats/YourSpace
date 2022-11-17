@@ -40,4 +40,5 @@ class MessageView(web.View):
         elif data['reason'] == 'e':
             pass
 
+        # returing html page
         return web.HTTPFound(location=location)
