@@ -56,17 +56,27 @@ class Message:
     @staticmethod
     async def get_chats(db: AsyncIOMotorDatabase, user_id: str, limit: int, friends):
 
-        #print(friends)
-
-        # messages = await db.messages.find({'from_user': ObjectId(target_id),
-                                           # 'to_user': ObjectId(user_id)}).to_list(limit)
+        messages = await db.messages.find({'from_user': ObjectId(target_id),
+                                           'to_user': ObjectId(user_id)}).to_list(limit)
 
         # get outbox
-        # messages += await db.messages.find({'from_user': ObjectId(user_id),
-                                            # 'to_user': ObjectId(target_id)}).to_list(limit)
-        
-        result = {}
-        return result
+        messages += await db.messages.find({'from_user': ObjectId(user_id),
+                                            'to_user': ObjectId(target_id)}).to_list(limit)
+
+        # sort by date
+        messages = sorted(
+            messages,
+            key=lambda x: (x['date_created'], '%Y-%m-%d %H:%M:%S'), reverse=False
+        )
+
+        output = []
+        for item in messages:
+            if dict(message=item['messsage'], user_first=item['author_first'],
+                    user_last=item['author_last'], date_created=item['date_created']) not in output:
+                output.append(dict(message=item['messsage'], user_first=item['author_first'],
+                                   user_last=item['author_last'], date_created=item['date_created']))
+
+        return output
 
     # Edit message sent by user
     # Inputs: Database, Author, Message ID, Message
