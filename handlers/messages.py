@@ -19,10 +19,10 @@ class MessageView(web.View):
             return web.HTTPForbidden()
 
         friends = await User.get_user_friends(db=self.app['db'], user_id=self.session['user']['_id'])
-        messages = await Message.get_chats(db=self.app['db'], user_id=self.session['user']['_id'],
-                                           limit=1024, friends=friends)
+        # messages = await Message.get_chats(db=self.app['db'], user_id=self.session['user']['_id'],
+                                           # limit=1024, friends=friends)
 
-        return dict(messages=messages)
+        return dict()
 
     async def post(self):
         if 'user' not in self.session:
@@ -30,7 +30,6 @@ class MessageView(web.View):
 
         location = self.app.router['messages'].url_for()
         data = await self.post()
-        print(data)
 
         if data['reason'] == 'd':
             await Message.delete_message(db=self.app['db'], message_id=data['message_id'])

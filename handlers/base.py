@@ -186,12 +186,11 @@ class Chat(web.View):
         # take val with uid and process it further
         # Fuck you, HTTP!
 
-        target_id = str(self.url).split("?")[1].split("&x")[0].split("t_profile=")[1]
+        target_id = str(self.url).split("?")[1].split("&x")[0].split("t_profile=")[1].split("&offset")[0]
         session = await get_session(self)
         target = await User.get_user_by_id(db=self.app['db'], user_id=target_id)
         messages = await Message.get_chat(db=self.app['db'], user_id=session['user']['_id'],
                                           target_id=target_id, limit=1024)
-        print(session)
 
         return dict(current_user=session['user'], target_user=target, messages=messages)
 
