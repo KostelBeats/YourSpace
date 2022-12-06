@@ -54,7 +54,7 @@ class Message:
         return messages
 
     @staticmethod
-    async def get_chats(db: AsyncIOMotorDatabase, user_id: str, limit: int, friends):
+    async def get_chats(db: AsyncIOMotorDatabase, user_id: str, limit: int, friends, target_id: str):
 
         messages = await db.messages.find({'from_user': ObjectId(target_id),
                                            'to_user': ObjectId(user_id)}).to_list(limit)
