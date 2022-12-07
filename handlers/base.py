@@ -98,7 +98,7 @@ class Login(web.View):
         email = data['email']
         password = data['password']
         user = await User.get_user_by_email(db=self.app['db'], email=email)
-        if user.get('error'):
+        if not user:
             return web.HTTPFound(location=self.app.router['error_404'].url_for())
 
         if user['password'] == hashlib.sha256(password.encode('utf8')).hexdigest():
