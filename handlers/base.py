@@ -118,6 +118,8 @@ class Signup(web.View):
 
     async def post(self):
         data = await self.post()
+        if await User.get_user_by_email(db=self.app['db'], email=data['email']):
+            return web.HTTPFound(location=app.router['error_403'].url_for())
         result = await User.create_new_user(db=self.app['db'], data=data)
         if not result:
             # todo: show error on ui!
