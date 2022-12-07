@@ -24,7 +24,7 @@ class User:
             user['friends'] = [str(uid) for uid in user['friends']]
             return user
         else:
-            return dict(error='User with email {} not found'.format(email))
+            return None
 
     # Find user in database by its id
     # Inputs: Database, Email
